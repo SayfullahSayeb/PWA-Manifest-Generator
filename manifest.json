@@ -1,16 +1,24 @@
 {
-  "name": "My PWA App",
-  "short_name": "PWA App",
-  "description": "A Progressive Web Application",
+  "id": "Manifest Generator",
+  "name": "Manifest Generator",
+  "short_name": "Manifest Generator",
+  "description": "Manifest Generator",
   "start_url": "/",
   "scope": "/",
   "lang": "en-US",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#4CAF50",
-  "text_direction": "ltr",
+  "theme_color": "#230d4f",
+  "dir": "auto",
   "orientation": "any",
   "category": "utilities",
+  "screenshots": [
+    {
+      "src": "screenshot.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg"
+    }
+  ],
   "icons": [
     {
       "purpose": "any",
