@@ -9,7 +9,7 @@ const defaultManifest = {
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#4CAF50",
-    text_direction: "ltr",
+    text_direction: "auto",
     orientation: "any",
     category: "utilities",
     icons: [{
