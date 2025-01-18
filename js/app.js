@@ -1,17 +1,19 @@
 // Default manifest values
 const defaultManifest = {
-    name: "My PWA App",
-    short_name: "PWA App",
-    description: "A Progressive Web Application",
+    id: "",
+    name: "",
+    short_name: "",
+    description: "",
     start_url: "/",
     scope: "/",
     lang: "en-US",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#4CAF50",
-    text_direction: "auto",
+    dir: "auto",
     orientation: "any",
     category: "utilities",
+    screenshots: [],
     icons: [{
         purpose: "any",
         sizes: "512x512",
@@ -55,49 +57,122 @@ function initializeTimeDisplay() {
         }
     }
 
-    // Update time immediately and then every second
+    // Update time immediately and then every minute
     updateTime();
-    setInterval(updateTime, 1000);
+    setInterval(updateTime, 60000); // Update every minute
 }
 
 // Initialize form with default values
 function initializeForm() {
     Object.entries({
-        'appName': defaultManifest.name,
-        'shortName': defaultManifest.short_name,
-        'appDescription': defaultManifest.description,
+        'appId': defaultManifest.id,
         'startUrl': defaultManifest.start_url,
         'scope': defaultManifest.scope,
         'lang': defaultManifest.lang,
         'displayMode': defaultManifest.display,
         'backgroundColor': defaultManifest.background_color,
         'themeColor': defaultManifest.theme_color,
-        'textDirection': defaultManifest.text_direction,
+        'textDirection': defaultManifest.dir,
         'displayOrientation': defaultManifest.orientation,
         'category': defaultManifest.category
     }).forEach(([id, value]) => {
         const element = document.getElementById(id);
-        if (element) element.value = value;
+        if (element && value) element.value = value;
     });
+}
+
+// Handle icon upload
+document.getElementById('iconUrl').addEventListener('change', function(e) {
+    if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        const iconPreview = document.getElementById('iconPreview');
+        
+        reader.onload = function(e) {
+            iconPreview.innerHTML = `
+                <img src="${e.target.result}" alt="Icon Preview">
+            `;
+            iconPreview.classList.add('active');
+            updateManifestOutput(); // Update manifest immediately
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+});
+
+// Handle screenshots
+let screenshotFiles = []; // Array to store screenshot files
+
+function handleScreenshots(newFiles) {
+    const screenshotsList = document.getElementById('screenshotsList');
+    
+    // Add new files to existing array
+    Array.from(newFiles).forEach(file => {
+        if (!screenshotFiles.some(f => f.name === file.name)) {
+            screenshotFiles.push(file);
+        }
+    });
+    
+    // Clear and rebuild preview
+    screenshotsList.innerHTML = '';
+    
+    screenshotFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const div = document.createElement('div');
+            div.className = 'screenshot-preview';
+            div.innerHTML = `
+                <img src="${e.target.result}" alt="Screenshot ${index + 1}">
+                <button class="remove-screenshot" data-index="${index}" onclick="removeScreenshot(${index})">×</button>
+            `;
+            screenshotsList.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+    });
+    
+    updateManifestOutput(); // Update manifest immediately
+}
+
+// Remove screenshot
+function removeScreenshot(index) {
+    screenshotFiles.splice(index, 1); // Remove file from array
+    handleScreenshots([]); // Rebuild preview
+}
+
+// Get screenshots list for manifest
+function getScreenshotsList() {
+    return screenshotFiles.map((file, index) => ({
+        src: `screenshot-${index + 1}${file.name.substr(file.name.lastIndexOf('.'))}`,
+        sizes: "1280x720",
+        type: file.type
+    }));
 }
 
 // Update manifest output in real-time
 function updateManifestOutput() {
     const manifest = {
-        name: document.getElementById('appName').value || defaultManifest.name,
-        short_name: document.getElementById('shortName').value || defaultManifest.short_name,
-        description: document.getElementById('appDescription').value || defaultManifest.description,
+        id: document.getElementById('appId').value,
+        name: document.getElementById('appName').value,
+        short_name: document.getElementById('shortName').value,
+        description: document.getElementById('appDescription').value,
         start_url: document.getElementById('startUrl').value || defaultManifest.start_url,
         scope: document.getElementById('scope').value || defaultManifest.scope,
         lang: document.getElementById('lang').value || defaultManifest.lang,
         display: document.getElementById('displayMode').value || defaultManifest.display,
         background_color: document.getElementById('backgroundColor').value || defaultManifest.background_color,
         theme_color: document.getElementById('themeColor').value || defaultManifest.theme_color,
-        text_direction: document.getElementById('textDirection').value || defaultManifest.text_direction,
+        dir: document.getElementById('textDirection').value,
         orientation: document.getElementById('displayOrientation').value || defaultManifest.orientation,
-        category: document.getElementById('category').value || defaultManifest.category,
+        category: document.getElementById('category').value,
+        screenshots: getScreenshotsList(),
         icons: defaultManifest.icons
     };
+
+    // Remove empty fields
+    Object.keys(manifest).forEach(key => {
+        if (manifest[key] === "" || 
+            (Array.isArray(manifest[key]) && manifest[key].length === 0)) {
+            delete manifest[key];
+        }
+    });
 
     document.getElementById('manifestOutput').textContent = JSON.stringify(manifest, null, 2);
 }
@@ -110,8 +185,11 @@ function updateLivePreview() {
     document.querySelector('.mobile-status-bar').style.backgroundColor = themeColor;
     document.querySelector('.mobile-body').style.backgroundColor = backgroundColor;
 
+    const previewText = document.getElementById('previewText');
+    previewText.textContent = 'Your App Content Here';
+
     const isDarkBg = isColorDark(backgroundColor);
-    document.getElementById('previewText').style.color = isDarkBg ? '#ffffff' : '#333333';
+    previewText.style.color = isDarkBg ? '#ffffff' : '#333333';
 }
 
 // Helper function to determine if a color is dark
@@ -124,48 +202,10 @@ function isColorDark(color) {
     return brightness < 128;
 }
 
-// Handle file upload
-document.getElementById('iconUrl').addEventListener('change', function(e) {
-    if (e.target.files && e.target.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const iconFile = e.target.files[0];
-            resizeIcon(iconFile);
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    }
+// Handle screenshots upload
+document.getElementById('screenshots').addEventListener('change', function(e) {
+    handleScreenshots(e.target.files);
 });
-
-// Resize icon function
-function resizeIcon(iconFile) {
-    const sizes = [512];
-    const resizedIconsList = document.getElementById('resizedIconsList');
-    resizedIconsList.innerHTML = '';
-
-    const img = new Image();
-    const reader = new FileReader();
-
-    reader.onload = function(event) {
-        img.onload = function() {
-            sizes.forEach(size => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = size;
-                canvas.height = size;
-                ctx.drawImage(img, 0, 0, size, size);
-
-                canvas.toBlob((blob) => {
-                    const url = URL.createObjectURL(blob);
-                    const li = document.createElement('li');
-                    li.innerHTML = `${size}x${size} <a href="${url}" download="icon-${size}.png">Download</a>`;
-                    resizedIconsList.appendChild(li);
-                }, 'image/png');
-            });
-        };
-        img.src = event.target.result;
-    };
-    reader.readAsDataURL(iconFile);
-}
 
 // Copy JSON button handler
 document.getElementById('copyJsonButton').addEventListener('click', function() {
@@ -184,11 +224,16 @@ document.getElementById('downloadManifest').addEventListener('click', function()
     zip.file('manifest.json', manifestJson);
     if (iconFile) zip.file('icon.png', iconFile);
 
+    // Add screenshots
+    screenshotFiles.forEach((file, index) => {
+        zip.file(`screenshot-${index + 1}${file.name.substr(file.name.lastIndexOf('.'))}`, file);
+    });
+
     zip.generateAsync({ type: 'blob' })
         .then(function(content) {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(content);
-            link.download = 'manifest-and-icon.zip';
+            link.download = 'manifest-and-assets.zip';
             link.click();
         });
 });
@@ -199,14 +244,38 @@ document.getElementById('manifestForm').addEventListener('submit', function(even
     updateManifestOutput();
     document.getElementById('downloadManifest').style.display = 'inline-block';
     document.getElementById('copyJsonButton').style.display = 'inline-block';
-    document.getElementById('resizedIconsList').style.display = 'block';
 });
 
-// Listen for display mode changes
-document.getElementById('displayMode').addEventListener('change', function(e) {
-    updateMobilePreview(e.target.value);
-});
+// Drag and drop handlers for file uploads
+['iconUrl', 'screenshots'].forEach(id => {
+    const container = document.getElementById(id).closest('.file-upload-container');
+    
+    container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        container.classList.add('drag-over');
+    });
 
+    container.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        container.classList.remove('drag-over');
+    });
+
+    container.addEventListener('drop', (e) => {
+        e.preventDefault();
+        container.classList.remove('drag-over');
+        const input = document.getElementById(id);
+        const dt = e.dataTransfer;
+        input.files = dt.files;
+        
+        if (id === 'screenshots') {
+            handleScreenshots(dt.files);
+        } else {
+            const event = new Event('change');
+            input.dispatchEvent(event);
+        }
+        updateManifestOutput();
+    });
+});
 
 // Dropdown functionality
 function toggleInstructions() {

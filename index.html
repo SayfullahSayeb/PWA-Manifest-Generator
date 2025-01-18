@@ -26,6 +26,11 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="appDescription">Description:</label>
+                    <input type="text" id="appDescription" placeholder="Enter description" required>
+                </div>
+
                 <div class="form-group inline">
                     <div>
                         <label for="themeColor">Theme Color (Hex):</label>
@@ -35,11 +40,6 @@
                         <label for="backgroundColor">Background Color (Hex):</label>
                         <input type="text" id="backgroundColor" placeholder="#ffffff" required>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="appDescription">Description:</label>
-                    <input type="text" id="appDescription" placeholder="Enter description" required>
                 </div>
 
                 <div class="form-group inline">
@@ -55,8 +55,50 @@
 
                 <div class="form-group inline">
                     <div>
+                        <label for="appId">App ID:</label>
+                        <input type="text" id="appId" placeholder="Enter app ID" required>
+                    </div>
+                    <div>
                         <label for="lang">Language:</label>
                         <input type="text" id="lang" placeholder="en-US" required>
+                    </div>
+                </div>
+                
+                <div class="form-group inline">
+                    <div>
+                        <label for="displayMode">Display Mode:</label>
+                        <select id="displayMode">
+                            <option value="standalone">Standalone</option>
+                            <option value="fullscreen">Fullscreen</option>
+                            <option value="minimal-ui">Minimal UI</option>
+                            <option value="browser">Browser</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="displayOrientation">Display Orientation:</label>
+                        <select id="displayOrientation">
+                            <option value="any">Any</option>
+                            <option value="landscape">Landscape</option>
+                            <option value="portrait">Portrait</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group inline">
+                    <div>
+                        <label for="category">Category:</label>
+                        <select id="category">
+                            <option value="utilities">Utilities</option>
+                            <option value="games">Games</option>
+                            <option value="social">Social</option>
+                            <option value="business">Business</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="education">Education</option>
+                            <option value="finance">Finance</option>
+                            <option value="productivity">Productivity</option>
+                            <option value="lifestyle">Lifestyle</option>
+                            <option value="shopping">Shopping</option>
+                        </select>
                     </div>
                     <div>
                         <label for="textDirection">Text Direction:</label>
@@ -68,45 +110,34 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="displayMode">Display Mode:</label>
-                    <select id="displayMode">
-                        <option value="standalone">Standalone</option>
-                        <option value="fullscreen">Fullscreen</option>
-                        <option value="minimal-ui">Minimal UI</option>
-                        <option value="browser">Browser</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="displayOrientation">Display Orientation:</label>
-                    <select id="displayOrientation">
-                        <option value="any">Any</option>
-                        <option value="landscape">Landscape</option>
-                        <option value="portrait">Portrait</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Category:</label>
-                    <select id="category">
-                        <option value="utilities">Utilities</option>
-                        <option value="games">Games</option>
-                        <option value="social">Social</option>
-                        <option value="business">Business</option>
-                        <option value="entertainment">Entertainment</option>
-                    </select>
-                </div>
 
                 <div class="form-group">
                     <label for="iconUrl">Upload Icon (512x512px):</label>
-                    <input type="file" id="iconUrl" accept="image/*" required>
+                    <div class="file-upload-container">
+                        <input type="file" id="iconUrl" accept="image/*" required>
+                        <div class="upload-info">
+                            <span>📁 Upload App Icon (512x512px)</span>
+                            <small>Click to add or drag and drop icon here</small>
+                        </div>
+                    </div>
+                    <div id="iconPreview" class="icon-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="screenshots">Screenshots (Multiple):</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="screenshots" accept="image/*" multiple>
+                        <div class="upload-info">
+                            <span>📸 Add Screenshots (Recommended: 1280x720)</span>
+                            <small>Click to add or drag and drop images here</small>
+                        </div>
+                    </div>
+                    <div id="screenshotsList" class="screenshots-preview"></div>
                 </div>
 
                 <button type="submit">Generate Manifest</button>
             </form>
         </div>
-
 
         <!-- 2nd column: Mobile Frame -->
         <div class="mobile-frame">
@@ -116,9 +147,30 @@
                     <span class="time" id="currentTime"></span>
                 </div>
                 <div class="status-right">
-                    <span class="battery">89%</span>
-                    <span class="wifi">📶</span>
-                    <span class="signal">📱</span>
+                    <!-- Signal SVG -->
+                    <span class="signal">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <rect x="2" y="16" width="4" height="4"/>
+                            <rect x="8" y="12" width="4" height="8"/>
+                            <rect x="14" y="8" width="4" height="12"/>
+                            <rect x="20" y="4" width="4" height="16"/>
+                        </svg>
+                    </span>
+                    <!-- WiFi SVG -->
+                    <span class="wireless">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 6c3.537 0 6.837 1.353 9.293 3.809l1.414-1.414C19.874 5.561 16.071 4 12 4c-4.071 0-7.874 1.561-10.707 4.395l1.414 1.414C5.163 7.353 8.463 6 12 6z"/>
+                            <path d="M12 10c2.374 0 4.558.843 6.244 2.244l1.414-1.414C17.539 8.712 14.856 8 12 8c-2.856 0-5.539.712-7.658 1.83l1.414 1.414C7.442 10.843 9.626 10 12 10z"/>
+                            <path d="M12 14c1.13 0 2.162.411 2.957 1.088l1.414-1.414C15.118 12.589 13.604 12 12 12s-3.118.589-4.371 1.674l1.414 1.414C9.838 14.411 10.87 14 12 14z"/>
+                            <circle cx="12" cy="18" r="2"/>
+                        </svg>
+                    </span>
+                    <!-- Battery SVG -->
+                    <span class="battery">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M20 10V8H4v8h16v-2h2v-4h-2zm-2 4H6V10h12v4z"/>
+                        </svg>
+                    </span>
                 </div>
             </div>
             <div class="mobile-screen">
@@ -130,38 +182,40 @@
                 </div>
             </div>
         </div>
+
         <!-- 3rd column: Manifest Output -->
-            <div class="form-right">
-                <div id="manifestResult">
-                    <h2>Preview:</h2>
-                    <pre id="manifestOutput"></pre>
-                    <div class="button-group">
-                        <button id="downloadManifest">Download ZIP</button>
-                        <button id="copyJsonButton">Copy JSON</button>
-                    </div>
+        <div class="form-right">
+            <div id="manifestResult">
+                <h2>Preview:</h2>
+                <pre id="manifestOutput"></pre>
+                <div class="button-group">
+                    <button id="downloadManifest">Download ZIP</button>
+                    <button id="copyJsonButton">Copy JSON</button>
                 </div>
-            
-                <!-- PWA Installation Instructions Dropdown -->
-                <div class="pwa-instructions">
-                    <div class="dropdown-header" onclick="toggleInstructions()">
-                        <h3>PWA Installation Steps</h3>
-                        <span class="dropdown-arrow">▼</span>
-                    </div>
-                    <div class="dropdown-content" id="installSteps">
-                        <ol class="install-steps">
-                            <li>Add these meta tags to your HTML <code>&lt;head&gt;</code>:</li>
-                            <pre class="code-snippet">&lt;link rel="manifest" href="/manifest.json"&gt;</pre>
-                            
-                            <li>Place the manifest.json file in your root directory</li>
-                            <li>Place the icon in your root directory</li>
-                            <li>Ensure your site is served over HTTPS</li>
-                            <li>Test the PWA using Chrome DevTools > Application tab</li>
-                        </ol>
-                    </div>
+            </div>
+        
+            <!-- PWA Installation Instructions Dropdown -->
+            <div class="pwa-instructions">
+                <div class="dropdown-header" onclick="toggleInstructions()">
+                    <h3>PWA Installation Steps</h3>
+                    <span class="dropdown-arrow">▼</span>
                 </div>
+                <div class="dropdown-content" id="installSteps">
+                    <ol class="install-steps">
+                        <li>Add these meta tags to your HTML <code>&lt;head&gt;</code>:</li>
+                        <pre class="code-snippet">
+&lt;link rel="manifest" href="/manifest.json"&gt;</pre>
+                        
+                        <li>Place the manifest.json file in your root directory</li>
+                        <li>Place the icon in your root directory</li>
+                        <li>Ensure your site is served over HTTPS</li>
+                        <li>Test the PWA using Chrome DevTools > Application tab</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="js/app.js"></script>
-
 </body>
 </html>
