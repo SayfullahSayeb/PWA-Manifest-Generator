@@ -207,40 +207,6 @@ document.getElementById('displayMode').addEventListener('change', function(e) {
     updateMobilePreview(e.target.value);
 });
 
-// Function to update mobile preview based on display mode
-function updateMobilePreview(displayMode) {
-    const mobileFrame = document.querySelector('.mobile-frame');
-    const mobileScreen = document.querySelector('.mobile-screen');
-
-    // Reset previous styles
-    mobileFrame.className = 'mobile-frame';
-    mobileScreen.style.width = '';
-    mobileScreen.style.height = '';
-
-    // Apply styles based on display mode
-    switch(displayMode) {
-        case 'fullscreen':
-            mobileFrame.classList.add('fullscreen-mode');
-            mobileScreen.style.width = '100%';
-            mobileScreen.style.height = '100vh';
-            break;
-        case 'standalone':
-            mobileFrame.classList.add('standalone-mode');
-            // Default mobile frame size
-            break;
-        case 'minimal-ui':
-            mobileFrame.classList.add('minimal-ui-mode');
-            // Show only essential UI elements
-            break;
-        case 'browser':
-            mobileFrame.classList.add('browser-mode');
-            // Add browser UI elements
-            break;
-        default:
-            // Default mobile frame appearance
-            break;
-    }
-}
 
 // Dropdown functionality
 function toggleInstructions() {
