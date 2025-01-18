@@ -11,7 +11,7 @@ const defaultManifest = {
     theme_color: "#4CAF50",
     text_direction: "auto",
     orientation: "any",
-    category: "utilities",
+    categories: "utilities",
     icons: [{
         purpose: "any",
         sizes: "512x512",
@@ -74,7 +74,7 @@ function initializeForm() {
         'themeColor': defaultManifest.theme_color,
         'textDirection': defaultManifest.text_direction,
         'displayOrientation': defaultManifest.orientation,
-        'category': defaultManifest.category
+        'categories': defaultManifest.categories
     }).forEach(([id, value]) => {
         const element = document.getElementById(id);
         if (element) element.value = value;
@@ -95,7 +95,7 @@ function updateManifestOutput() {
         theme_color: document.getElementById('themeColor').value || defaultManifest.theme_color,
         text_direction: document.getElementById('textDirection').value || defaultManifest.text_direction,
         orientation: document.getElementById('displayOrientation').value || defaultManifest.orientation,
-        category: document.getElementById('category').value || defaultManifest.category,
+        categories: document.getElementById('categories').value || defaultManifest.categories,
         icons: defaultManifest.icons
     };
 
