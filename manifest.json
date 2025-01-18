@@ -10,7 +10,7 @@
   "theme_color": "#4CAF50",
   "text_direction": "ltr",
   "orientation": "any",
-  "categories": "utilities",
+  "category": "utilities",
   "icons": [
     {
       "purpose": "any",
