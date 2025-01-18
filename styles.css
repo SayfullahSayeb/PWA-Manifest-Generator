@@ -195,8 +195,7 @@ select:focus {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
