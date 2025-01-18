@@ -1,0 +1,22 @@
+{
+  "name": "My PWA App",
+  "short_name": "PWA App",
+  "description": "A Progressive Web Application",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en-US",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4CAF50",
+  "text_direction": "ltr",
+  "orientation": "any",
+  "category": "utilities",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "icon.png",
+      "type": "image/png"
+    }
+  ]
+}

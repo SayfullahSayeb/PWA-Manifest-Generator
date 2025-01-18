@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="PWA App">
+    <title>PWA Manifest Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Manifest Generator</h1>
+    <div id="container">
+        <!-- 1st column: Form Group -->
+        <div class="form-left">
+            <form id="manifestForm">
+                <div class="form-group inline">
+                    <div>
+                        <label for="appName">App Name:</label>
+                        <input type="text" id="appName" placeholder="Enter app name" required>
+                    </div>
+                    <div>
+                        <label for="shortName">Short Name:</label>
+                        <input type="text" id="shortName" placeholder="Enter short name" required>
+                    </div>
+                </div>
+
+                <div class="form-group inline">
+                    <div>
+                        <label for="themeColor">Theme Color (Hex):</label>
+                        <input type="text" id="themeColor" placeholder="#4CAF50" required>
+                    </div>
+                    <div>
+                        <label for="backgroundColor">Background Color (Hex):</label>
+                        <input type="text" id="backgroundColor" placeholder="#ffffff" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="appDescription">Description:</label>
+                    <input type="text" id="appDescription" placeholder="Enter description" required>
+                </div>
+
+                <div class="form-group inline">
+                    <div>
+                        <label for="startUrl">Start URL:</label>
+                        <input type="text" id="startUrl" placeholder="/" required>
+                    </div>
+                    <div>
+                        <label for="scope">Scope:</label>
+                        <input type="text" id="scope" placeholder="/" required>
+                    </div>
+                </div>
+
+                <div class="form-group inline">
+                    <div>
+                        <label for="lang">Language:</label>
+                        <input type="text" id="lang" placeholder="en-US" required>
+                    </div>
+                    <div>
+                        <label for="textDirection">Text Direction:</label>
+                        <select id="textDirection">
+                            <option value="ltr">LTR (Left to Right)</option>
+                            <option value="rtl">RTL (Right to Left)</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayMode">Display Mode:</label>
+                    <select id="displayMode">
+                        <option value="standalone">Standalone</option>
+                        <option value="fullscreen">Fullscreen</option>
+                        <option value="minimal-ui">Minimal UI</option>
+                        <option value="browser">Browser</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayOrientation">Display Orientation:</label>
+                    <select id="displayOrientation">
+                        <option value="any">Any</option>
+                        <option value="landscape">Landscape</option>
+                        <option value="portrait">Portrait</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category">
+                        <option value="utilities">Utilities</option>
+                        <option value="games">Games</option>
+                        <option value="social">Social</option>
+                        <option value="business">Business</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="iconUrl">Upload Icon (512x512px):</label>
+                    <input type="file" id="iconUrl" accept="image/*" required>
+                </div>
+
+                <button type="submit">Generate Manifest</button>
+            </form>
+        </div>
+
+
+        <!-- 2nd column: Mobile Frame -->
+        <div class="mobile-frame">
+            <div class="mobile-notch"></div>
+            <div class="mobile-status-bar">
+                <div class="status-left">
+                    <span class="time" id="currentTime"></span>
+                </div>
+                <div class="status-right">
+                    <span class="battery">89%</span>
+                    <span class="wifi">📶</span>
+                    <span class="signal">📱</span>
+                </div>
+            </div>
+            <div class="mobile-screen">
+                <div class="mobile-body">
+                    <div class="preview-background" id="previewBackgroundColor"></div>
+                    <div class="preview-content">
+                        <div id="previewText">Your App Content Here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 3rd column: Manifest Output -->
+            <!-- PWA Installation Instructions -->
+            <div class="form-right">
+                <div id="manifestResult">
+                    <h2>Preview:</h2>
+                    <pre id="manifestOutput"></pre>
+                    <div class="button-group">
+                        <button id="downloadManifest">Download ZIP</button>
+                        <button id="copyJsonButton">Copy JSON</button>
+                    </div>
+                </div>
+            
+                <!-- PWA Installation Instructions Dropdown -->
+                <div class="pwa-instructions">
+                    <div class="dropdown-header" onclick="toggleInstructions()">
+                        <h3>PWA Installation Steps</h3>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-content" id="installSteps">
+                        <ol class="install-steps">
+                            <li>Add these meta tags to your HTML <code>&lt;head&gt;</code>:</li>
+                            <pre class="code-snippet">
+            &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+            &lt;meta name="apple-mobile-web-app-status-bar-style" content="black"&gt;
+            &lt;meta name="apple-mobile-web-app-title" content="PWA App"&gt;
+            
+            &lt;link rel="manifest" href="/manifest.json"&gt;</pre>
+                            
+                            <li>Place the manifest.json file in your root directory</li>
+                            <li>Place the icon in your root directory</li>
+                            <li>Ensure your site is served over HTTPS</li>
+                            <li>Test the PWA using Chrome DevTools > Application tab</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
