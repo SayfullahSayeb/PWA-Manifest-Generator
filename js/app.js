@@ -161,7 +161,7 @@ function updateManifestOutput() {
         theme_color: document.getElementById('themeColor').value || defaultManifest.theme_color,
         dir: document.getElementById('textDirection').value,
         orientation: document.getElementById('displayOrientation').value || defaultManifest.orientation,
-        category: document.getElementById('category').value,
+        categories: [document.getElementById('category').value], // Changed to array
         screenshots: getScreenshotsList(),
         icons: defaultManifest.icons
     };

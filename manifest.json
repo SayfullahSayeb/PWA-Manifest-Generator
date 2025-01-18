@@ -1,17 +1,20 @@
 {
-  "id": "Manifest Generator",
-  "name": "Manifest Generator",
-  "short_name": "Manifest Generator",
-  "description": "Manifest Generator",
-  "start_url": "/",
-  "scope": "/",
-  "lang": "en-US",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#230d4f",
-  "dir": "auto",
-  "orientation": "any",
-  "category": "utilities",
+  {
+    "id": "Manifest Generator",
+    "name": "Manifest Generator",
+    "short_name": "Manifest Generator",
+    "description": "Manifest Generator",
+    "start_url": "/",
+    "scope": "/",
+    "lang": "en-US",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4CAF50",
+    "dir": "auto",
+    "orientation": "portrait",
+    "categories": [
+      "utilities"
+    ],
   "screenshots": [
     {
       "src": "screenshot.jpg",
