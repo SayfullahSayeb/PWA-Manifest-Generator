@@ -11,7 +11,9 @@ const defaultManifest = {
     theme_color: "#4CAF50",
     text_direction: "auto",
     orientation: "any",
-    categories: "utilities",
+    categories: [
+    "utilities"
+  ],
     icons: [{
         purpose: "any",
         sizes: "512x512",
