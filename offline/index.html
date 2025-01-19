@@ -3,238 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Install Our PWA</title>
-    <link rel="manifest" href="/manifest.json">
-    <style>
-        :root {
-            --primary-color: #4F46E5;
-            --secondary-color: #818CF8;
-            --background-color: #F3F4F6;
-            --text-color: #1F2937;
-            --success-color: #10B981;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .install-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .app-icon {
-            width: 128px;
-            height: 128px;
-            margin: 0 auto 1.5rem;
-            border-radius: 24px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            color: #4B5563;
-        }
-
-        .install-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .install-button:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .install-button:disabled {
-            background-color: #9CA3AF;
-            cursor: not-allowed;
-        }
-
-        .instructions {
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: #F3F4F6;
-            border-radius: 0.5rem;
-            text-align: left;
-        }
-
-        .instructions h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-
-        .instructions ol {
-            margin-left: 1.5rem;
-        }
-
-        .instructions li {
-            margin-bottom: 0.5rem;
-        }
-
-        .success-message {
-            color: var(--success-color);
-            margin-top: 1rem;
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .install-container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            .install-button {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <title>Installation Page Generator</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="install-container">
-        <img src="https://pwa.zneloy.site/icon.png" alt="App Icon" class="app-icon">
-        <h1>Install Our App</h1>
-        <p>Get the best experience by installing our app on your device!</p>
-        
-        <button id="installButton" class="install-button">
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-            </svg>
-            Install App
-        </button>
-        
-        <p id="successMessage" class="success-message">
-            ✅ Installation started! Follow your browser's instructions.
-        </p>
+    <div class="builder-container">
+        <div class="sidebar">
+            <h2>Customize Your Page</h2>
+            <div class="form-group">
+                <label for="iconURL">App Icon URL</label>
+                <input type="text" id="iconURL" placeholder="Enter your app icon URL">
+            </div>
 
-        <div id="instructions" class="instructions">
-            <h2>Installation Instructions</h2>
-            <div id="instructionSteps"></div>
+            <div class="form-group">
+                <label for="buttonColor">Button Color</label>
+                <input type="text" id="buttonColor" placeholder="#4F46E5">
+            </div>
+
+            <div class="form-group">
+                <label for="backgroundColor">Background Color</label>
+                <input type="text" id="backgroundColor" placeholder="#F3F4F6">
+            </div>
+
+            <div class="form-group">
+                <label for="containerColor">Container Color</label>
+                <input type="text" id="containerColor" placeholder="#FFFFFF">
+            </div>
+
+            <div class="form-group">
+                <label for="headingText">Heading Text</label>
+                <input type="text" id="headingText" placeholder="Install Our App">
+            </div>
+
+            <div class="form-group">
+                <label for="paragraphText">Paragraph Text</label>
+                <input type="text" id="paragraphText" placeholder="Get the best experience by installing our app on your device!">
+            </div>
+        </div>
+
+        <div class="preview-area">
+            <h2>Preview</h2>
+            <div class="preview-container">
+                <iframe class="preview-frame" src="about:blank"></iframe>
+            </div>
         </div>
     </div>
 
-    <script>
-        let deferredPrompt;
-        const installButton = document.getElementById('installButton');
-        const successMessage = document.getElementById('successMessage');
-        const instructionSteps = document.getElementById('instructionSteps');
-
-        // Detect platform and set appropriate instructions
-        function setPlatformInstructions() {
-            const ua = navigator.userAgent;
-            let instructions = '';
-
-            if (/iPhone|iPad|iPod/.test(ua)) {
-                instructions = `
-                    <ol>
-                        <li>Tap the share button in Safari <span style="font-size: 1.2em">⎋</span></li>
-                        <li>Scroll down and tap "Add to Home Screen"</li>
-                        <li>Tap "Add" to confirm</li>
-                    </ol>
-                `;
-                installButton.style.display = 'none';
-            } else if (/Android/.test(ua)) {
-                instructions = `
-                    <ol>
-                        <li>Tap the install button above, or</li>
-                        <li>Tap the menu button in your browser</li>
-                        <li>Select "Add to Home Screen"</li>
-                    </ol>
-                `;
-            } else {
-                instructions = `
-                    <ol>
-                        <li>Click the install button above, or</li>
-                        <li>Click the install icon in your browser's address bar</li>
-                    </ol>
-                `;
-            }
-
-            instructionSteps.innerHTML = instructions;
-        }
-
-        // Handle the installation prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installButton.disabled = false;
-        });
-
-        // Installation button click handler
-        installButton.addEventListener('click', async () => {
-            if (!deferredPrompt) {
-                return;
-            }
-
-            try {
-                const result = await deferredPrompt.prompt();
-                console.log(`Install prompt result: ${result.outcome}`);
-                
-                successMessage.style.display = 'block';
-                installButton.disabled = true;
-                
-                deferredPrompt = null;
-            } catch (error) {
-                console.error('Error during installation:', error);
-            }
-        });
-
-        // Handle successful installation
-        window.addEventListener('appinstalled', (evt) => {
-            successMessage.textContent = '✅ App installed successfully!';
-            successMessage.style.display = 'block';
-            installButton.disabled = true;
-        });
-
-        // Initialize
-        window.addEventListener('load', () => {
-            setPlatformInstructions();
-            
-            // Check if app is already installed
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                installButton.disabled = true;
-                installButton.textContent = 'Already Installed';
-            } else {
-                installButton.disabled = false;
-            }
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
