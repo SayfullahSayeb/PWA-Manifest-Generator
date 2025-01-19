@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install Our PWA - Modern</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --primary-color: #FF5722;
+            --background-color: #FAFAFA;
+            --text-color: #212121;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .install-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #616161;
+        }
+
+        .install-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .install-button:hover {
+            background-color: #E64A19;
+        }
+
+        .success-message {
+            color: #388E3C;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="install-container">
+        <img src="https://pwa.zneloy.site/icon.png" alt="App Icon" class="app-icon">
+        <h1>Install Our App</h1>
+        <p>Get the best experience by installing our app on your device!</p>
+
+        <button id="installButton" class="install-button">Install App</button>
+
+        <p id="successMessage" class="success-message">
+            ✅ Installation started! Follow your browser's instructions.
+        </p>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+        const successMessage = document.getElementById('successMessage');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.disabled = false;
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            const result = await deferredPrompt.prompt();
+            if (result.outcome === 'accepted') {
+                successMessage.style.display = 'block';
+                installButton.disabled = true;
+                deferredPrompt = null;
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            successMessage.textContent = '✅ App installed successfully!';
+            successMessage.style.display = 'block';
+            installButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
