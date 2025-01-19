@@ -8,6 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadButton = document.getElementById('downloadButton');
     const copyButton = document.getElementById('copyButton');
 
+    function generateInstallScript(buttonColor) {
+        return `
+            <script>
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    const installButton = document.querySelector('.install-button');
+                    installButton.addEventListener('click', async () => {
+                        if (deferredPrompt) {
+                            deferredPrompt.prompt();
+                            const { outcome } = await deferredPrompt.userChoice;
+                            if (outcome === 'accepted') {
+                                document.querySelector('.success-message').style.display = 'block';
+                            }
+                            deferredPrompt = null;
+                        }
+                    });
+                });
+
+                // Register Service Worker
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', () => {
+                        navigator.serviceWorker.register('/sw.js')
+                            .then(registration => {
+                                console.log('ServiceWorker registration successful');
+                            })
+                            .catch(err => {
+                                console.log('ServiceWorker registration failed: ', err);
+                            });
+                    });
+                }
+            </script>
+        `;
+    }
+
     function updatePreview() {
         const iconURL = iconURLInput.value || 'icon.png';
         const buttonColor = buttonColorInput.value || '#4F46E5';
@@ -27,6 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Install Our PWA</title>
+                <link rel="manifest" href="/manifest.json">
+                <meta name="theme-color" content="${buttonColor}">
+                <link rel="apple-touch-icon" href="${iconURL}">
                 <style>
                     body {
                         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -71,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         border-radius: 0.5rem;
                         font-size: 1.1rem;
                         cursor: pointer;
+                        transition: background-color 0.3s ease;
                     }
                     .install-button:hover {
                         background-color: #6366F1;
@@ -115,12 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         </ol>
                     </div>
                 </div>
+                ${generateInstallScript(buttonColor)}
             </body>
             </html>
         `);
         previewDocument.close();
     }
 
+    // Event listeners for input changes
     iconURLInput.addEventListener('input', updatePreview);
     buttonColorInput.addEventListener('input', updatePreview);
     backgroundColorInput.addEventListener('input', updatePreview);
@@ -128,8 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
     headingTextInput.addEventListener('input', updatePreview);
     paragraphTextInput.addEventListener('input', updatePreview);
 
+    // Download button handler
     downloadButton.addEventListener('click', () => {
-        const iconURL = iconURLInput.value || 'https://pwa.zneloy.site/icon.png';
+        const iconURL = iconURLInput.value || 'icon.png';
         const buttonColor = buttonColorInput.value || '#4F46E5';
         const backgroundColor = backgroundColorInput.value || '#F3F4F6';
         const containerColor = containerColorInput.value || '#FFFFFF';
@@ -143,6 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Install Our PWA</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="${buttonColor}">
+    <link rel="apple-touch-icon" href="${iconURL}">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -187,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 0.5rem;
             font-size: 1.1rem;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .install-button:hover {
             background-color: #6366F1;
@@ -231,9 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </ol>
         </div>
     </div>
+    ${generateInstallScript(buttonColor)}
 </body>
-</html>
-        `;
+</html>`;
 
         const blob = new Blob([htmlContent], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
@@ -246,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     });
 
+    // Copy button handler
     copyButton.addEventListener('click', () => {
         const iconURL = iconURLInput.value || 'icon.png';
         const buttonColor = buttonColorInput.value || '#4F46E5';
@@ -261,6 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Install Our PWA</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="${buttonColor}">
+    <link rel="apple-touch-icon" href="${iconURL}">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -305,6 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 0.5rem;
             font-size: 1.1rem;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .install-button:hover {
             background-color: #6366F1;
@@ -349,16 +401,17 @@ document.addEventListener('DOMContentLoaded', () => {
             </ol>
         </div>
     </div>
+    ${generateInstallScript(buttonColor)}
 </body>
-</html>
-        `;
+</html>`;
 
-        navigator.clipboard.writeText(htmlContent).then(() => {
-            alert('Code copied to clipboard!');
-        }, (err) => {
-            alert('Failed to copy code: ', err);
-        });
-    });
+navigator.clipboard.writeText(htmlContent).then(() => {
+    alert('Code copied to clipboard!');
+}, (err) => {
+    alert('Failed to copy code: ' + err);
+});
+});
 
-    updatePreview();
+// Initialize the preview when the page loads
+updatePreview();
 });
