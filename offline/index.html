@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Installation Page Builder</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="builder-container">
+        <div class="sidebar">
+            <div class="template-selector">
+                <h2>Choose Template</h2>
+                <div class="templates-grid">
+                    <!-- Template options will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="customization-panel">
+                <div class="tabs">
+                    <button class="tab active">Basic</button>
+                    <button class="tab">Style</button>
+                    <button class="tab">Content</button>
+                    <button class="tab">Offline</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="appName">App Name</label>
+                    <input type="text" id="appName" placeholder="Your App Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="appDescription">Description</label>
+                    <textarea id="appDescription" rows="3" placeholder="App Description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="primaryColor">Primary Color</label>
+                    <input type="text" id="primaryColor" placeholder="#4F46E5">
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-area">
+            <div class="preview-header">
+                <h2>Preview</h2>
+                <div class="preview-controls">
+                    <button class="btn">Desktop</button>
+                    <button class="btn">Mobile</button>
+                    <button class="btn">Export</button>
+                </div>
+            </div>
+            <div class="preview-container">
+                <iframe class="preview-frame" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
