@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Installation Page Generator</title>
+    <title>PWA Installation Page Generator</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="${buttonColor}">
-<link rel="apple-touch-icon" href="${iconURL}">
 </head>
 <body>
     <div class="builder-container">
@@ -46,6 +43,7 @@
 
             <button id="downloadButton" class="btn">Download HTML</button>
             <button id="copyButton" class="btn">Copy Code</button>
+            <button onclick="showInstructions()" class="btn btn-info">View Instructions</button>
         </div>
 
         <div class="preview-area">
@@ -53,9 +51,71 @@
             <div class="preview-container">
                 <iframe class="preview-frame" src="about:blank"></iframe>
             </div>
-            <footer style="text-align: center; padding: 10px; ">
-                <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #000000;">Github</a>.</p>
-            </footer>
+        </div>
+    </div>
+
+    <!-- Copy Notification -->
+    <div class="notification" id="copyNotification">
+        Code copied to clipboard!
+    </div>
+
+    <!-- Instructions Popup -->
+    <div class="instructions-popup" id="instructionsPopup">
+        <div class="instructions-content">
+            <button class="close-popup" onclick="closeInstructions()">&times;</button>
+            <h2>PWA Installation Requirements</h2>
+            <ul>
+                <li>
+                    <strong>Web Manifest File:</strong>
+                    <p>Create a manifest.json file with the following structure:</p>
+                    <div class="code-block">
+{
+    "name": "Your App Name",
+    "short_name": "App",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4F46E5",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}</div>
+                </li>
+                <li>
+                    <strong>Service Worker:</strong>
+                    <p>Create a sw.js file with basic caching:</p>
+                    <div class="code-block">
+// sw.js example
+self.addEventListener('install', (event) => {
+    console.log('Service Worker installed');
+});
+
+self.addEventListener('activate', (event) => {
+    console.log('Service Worker activated');
+});
+
+self.addEventListener('fetch', (event) => {
+    event.respondWith(fetch(event.request));
+});</div>
+                </li>
+                <li>
+                    <strong>Required Meta Tags:</strong>
+                    <p>Add these to your HTML head:</p>
+                    <div class="code-block">
+&lt;link rel="manifest" href="manifest.json"&gt;
+&lt;meta name="theme-color" content="#your-color"&gt;
+&lt;link rel="apple-touch-icon" href="icon.png"&gt;</div>
+                </li>
+            </ul>
         </div>
     </div>
 

@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Install Our PWA</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
     <link rel="apple-touch-icon" href="icon.png">
     <style>
@@ -13,11 +12,12 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #F3F4F6;
             color: #1F2937;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
         .install-container {
             background: #FFFFFF;
@@ -39,10 +39,14 @@
             margin-bottom: 1rem;
             color: #4F46E5;
             font-size: 1.8rem;
+            text-align: center;
+            width: 100%;
         }
         p {
             margin-bottom: 1.5rem;
             color: #4B5563;
+            text-align: center;
+            width: 100%;
         }
         .install-button {
             background-color: #4F46E5;
@@ -53,14 +57,19 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: none;
+            margin: 0 auto;
+            min-width: 200px;
         }
         .install-button:hover {
-            background-color: #6366F1;
+            opacity: 0.9;
         }
         .success-message {
             color: #10B981;
             margin-top: 1rem;
             display: none;
+            text-align: center;
+            width: 100%;
         }
         .instructions {
             margin-top: 2rem;
@@ -73,14 +82,15 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: #4F46E5;
+            text-align: center;
         }
         .instructions ol {
             margin-left: 1.5rem;
+            padding-left: 1rem;
         }
         .instructions li {
             margin-bottom: 0.5rem;
-        }
-    </style>
+        }</style>
 </head>
 <body>
     <div class="install-container">
@@ -98,37 +108,48 @@
         </div>
     </div>
     
-            <script>
-                let deferredPrompt;
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    deferredPrompt = e;
-                    const installButton = document.querySelector('.install-button');
-                    installButton.addEventListener('click', async () => {
-                        if (deferredPrompt) {
-                            deferredPrompt.prompt();
-                            const { outcome } = await deferredPrompt.userChoice;
-                            if (outcome === 'accepted') {
-                                document.querySelector('.success-message').style.display = 'block';
-                            }
-                            deferredPrompt = null;
-                        }
-                    });
-                });
+        <script>
+            let deferredPrompt;
 
-                // Register Service Worker
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', () => {
-                        navigator.serviceWorker.register('/sw.js')
-                            .then(registration => {
-                                console.log('ServiceWorker registration successful');
-                            })
-                            .catch(err => {
-                                console.log('ServiceWorker registration failed: ', err);
-                            });
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                const installButton = document.querySelector('.install-button');
+                if (installButton) {
+                    installButton.style.display = 'block';
+                    
+                    installButton.addEventListener('click', async () => {
+                        if (!deferredPrompt) return;
+                        
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        
+                        if (outcome === 'accepted') {
+                            document.querySelector('.success-message').style.display = 'block';
+                        }
+                        
+                        deferredPrompt = null;
                     });
                 }
-            </script>
-        
+            });
+
+            window.addEventListener('appinstalled', (evt) => {
+                console.log('PWA was installed');
+                document.querySelector('.success-message').style.display = 'block';
+            });
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(registration => {
+                            console.log('ServiceWorker registration successful');
+                        })
+                        .catch(err => {
+                            console.log('ServiceWorker registration failed: ', err);
+                        });
+                });
+            }
+        </script>
 </body>
 </html>
