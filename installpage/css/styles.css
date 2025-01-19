@@ -63,7 +63,6 @@ input {
     cursor: pointer;
     font-size: 0.875rem;
     margin-top: 1rem;
-    width: 100%;
 }
 
 .btn:hover {
@@ -186,4 +185,54 @@ input {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
+}
+@media screen and (max-width: 768px) {
+    .builder-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .preview-area {
+        order: 1;
+        padding: 1rem;
+    }
+
+    .sidebar {
+        order: 2;
+        border-right: none;
+        border-top: 1px solid #E5E7EB;
+        padding: 1rem;
+        height: auto;
+        overflow-y: visible;
+    }
+
+    .preview-container {
+        height: 700px; 
+        margin: 10px; 
+    }
+
+    .preview-frame {
+        border-radius: 8px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .instructions-popup {
+        padding: 1rem;
+    }
+
+    .instructions-content {
+        width: 95%;
+        padding: 1rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .code-block {
+        max-width: 100%;
+        overflow-x: auto;
+    }
 }

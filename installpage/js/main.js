@@ -31,6 +31,7 @@ function generateStyles(buttonColor, backgroundColor, containerColor, isPreview 
             text-align: center;
             max-width: 500px;
             width: 90%;
+            margin: 20px;
         }
         .app-icon {
             width: 128px;
