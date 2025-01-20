@@ -119,18 +119,16 @@ function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, p
         }
     </style>
     <script>
-        // Function to check internet connection
+        let isOnline = navigator.onLine;
+        const redirectUrl = '${redirectUrl}';
+
         function checkConnection() {
             return navigator.onLine;
         }
 
-        // Function to handle refresh
         function handleRefresh() {
-            if (checkConnection()) {
-                const redirectUrl = '${redirectUrl}';
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+            if (checkConnection() && redirectUrl) {
+                window.location.href = redirectUrl;
             } else {
                 const button = document.querySelector('button');
                 button.classList.add('shake');
@@ -140,28 +138,23 @@ function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, p
             }
         }
 
-        // Add online event listener for automatic redirect
         window.addEventListener('online', () => {
-            const redirectUrl = '${redirectUrl}';
+            isOnline = true;
             if (redirectUrl) {
                 window.location.href = redirectUrl;
             }
         });
 
-        // Update UI when offline
         window.addEventListener('offline', () => {
+            isOnline = false;
             const button = document.querySelector('button');
             button.style.opacity = '0.7';
             button.style.cursor = 'not-allowed';
         });
 
-        // Check connection status on page load
         document.addEventListener('DOMContentLoaded', () => {
-            if (checkConnection()) {
-                const redirectUrl = '${redirectUrl}';
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+            if (checkConnection() && redirectUrl) {
+                window.location.href = redirectUrl;
             }
         });
     </script>

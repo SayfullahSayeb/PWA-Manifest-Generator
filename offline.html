@@ -98,18 +98,16 @@
         }
     </style>
     <script>
-        // Function to check internet connection
+        let isOnline = navigator.onLine;
+        const redirectUrl = 'https://pwa.zneloy.site/offlinepage/';
+
         function checkConnection() {
             return navigator.onLine;
         }
 
-        // Function to handle refresh
         function handleRefresh() {
-            if (checkConnection()) {
-                const redirectUrl = 'https://pwa.zneloy.site/offline-status/';
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+            if (checkConnection() && redirectUrl) {
+                window.location.href = redirectUrl;
             } else {
                 const button = document.querySelector('button');
                 button.classList.add('shake');
@@ -119,28 +117,23 @@
             }
         }
 
-        // Add online event listener for automatic redirect
         window.addEventListener('online', () => {
-            const redirectUrl = 'https://pwa.zneloy.site/offline-status/';
+            isOnline = true;
             if (redirectUrl) {
                 window.location.href = redirectUrl;
             }
         });
 
-        // Update UI when offline
         window.addEventListener('offline', () => {
+            isOnline = false;
             const button = document.querySelector('button');
             button.style.opacity = '0.7';
             button.style.cursor = 'not-allowed';
         });
 
-        // Check connection status on page load
         document.addEventListener('DOMContentLoaded', () => {
-            if (checkConnection()) {
-                const redirectUrl = 'https://pwa.zneloy.site/offline-status/';
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+            if (checkConnection() && redirectUrl) {
+                window.location.href = redirectUrl;
             }
         });
     </script>
