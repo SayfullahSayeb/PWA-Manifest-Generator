@@ -6,17 +6,18 @@ function updatePreview() {
   const paragraph = document.getElementById('paragraph').value;
   const paragraphColor = document.getElementById('paragraphColor').value;
   const buttonText = document.getElementById('buttonText').value;
+  const buttonTextColor = document.getElementById('buttonTextColor').value;
   const buttonColor = document.getElementById('buttonColor').value;
   const buttonHoverColor = document.getElementById('buttonHoverColor').value;
 
-  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonColor, buttonHoverColor);
+  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
   const frame = document.getElementById('preview-frame');
   frame.contentDocument.open();
   frame.contentDocument.write(html);
   frame.contentDocument.close();
 }
 
-function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonColor, buttonHoverColor) {
+function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,7 +91,7 @@ function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, p
         }
         button {
             background: ${buttonColor};
-            color: #fff;
+            color: ${buttonTextColor};
             border: none;
             padding: .8rem 2rem;
             border-radius: 25px;
@@ -136,10 +137,11 @@ function generateHTML() {
   const paragraph = document.getElementById('paragraph').value;
   const paragraphColor = document.getElementById('paragraphColor').value;
   const buttonText = document.getElementById('buttonText').value;
+  const buttonTextColor = document.getElementById('buttonTextColor').value;
   const buttonColor = document.getElementById('buttonColor').value;
   const buttonHoverColor = document.getElementById('buttonHoverColor').value;
 
-  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonColor, buttonHoverColor);
+  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
 
   const blob = new Blob([html], { type: 'text/html' });
   const url = window.URL.createObjectURL(blob);
@@ -160,10 +162,11 @@ function copyCode() {
   const paragraph = document.getElementById('paragraph').value;
   const paragraphColor = document.getElementById('paragraphColor').value;
   const buttonText = document.getElementById('buttonText').value;
+  const buttonTextColor = document.getElementById('buttonTextColor').value;
   const buttonColor = document.getElementById('buttonColor').value;
   const buttonHoverColor = document.getElementById('buttonHoverColor').value;
 
-  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonColor, buttonHoverColor);
+  const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
 
   navigator.clipboard.writeText(html).then(() => {
     const copyBtn = document.querySelector('.btn-copy');
