@@ -1,0 +1,233 @@
+:root {
+    --primary-color: #1a73e8;
+    --secondary-color: #1557b0;
+    --background-color: #F3F4F6;
+    --text-color: #1F2937;
+    --border-color: #E5E7EB;
+    --success-color: #10B981;
+    --success-hover: #059669;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.builder-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background: white;
+    padding: 1.5rem;
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    height: 100vh;
+    position: fixed;
+    width: 300px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    background: #F9FAFB;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    background: white;
+}
+
+input:hover {
+    border-color: var(--primary-color);
+}
+
+input::placeholder {
+    color: #9CA3AF;
+}
+
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    position: sticky;
+    bottom: 1.5rem;
+    background: white;
+    padding-top: 1rem;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-copy {
+    background-color: var(--success-color);
+}
+
+.btn-copy:hover {
+    background-color: var(--success-hover);
+}
+
+.preview-area {
+    padding: 2rem;
+    margin-left: 300px;
+    min-height: 100vh;
+    background: var(--background-color);
+}
+
+.preview-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 700px;
+    margin: 10px;
+}
+
+.preview-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media screen and (max-width: 768px) {
+    .builder-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        order: 2;
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+        padding: 1rem;
+    }
+
+    .preview-area {
+        order: 1;
+        margin-left: 0;
+        padding: 1rem;
+        min-height: auto;
+    }
+
+    .preview-container {
+        height: 500px;
+        margin: 0;
+    }
+
+    .button-group {
+        position: static;
+        padding-top: 0;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .preview-container {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    animation: fadeIn 0.3s ease-out forwards;
+      }
