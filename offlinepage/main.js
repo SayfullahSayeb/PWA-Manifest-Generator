@@ -9,15 +9,16 @@ function updatePreview() {
     const buttonTextColor = document.getElementById('buttonTextColor').value;
     const buttonColor = document.getElementById('buttonColor').value;
     const buttonHoverColor = document.getElementById('buttonHoverColor').value;
+    const redirectUrl = document.getElementById('redirectUrl').value;
 
-    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
+    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor, redirectUrl);
     const frame = document.getElementById('preview-frame');
     frame.contentDocument.open();
     frame.contentDocument.write(html);
     frame.contentDocument.close();
 }
 
-function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor) {
+function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor, redirectUrl) {
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,7 +127,10 @@ function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, p
         // Function to handle refresh
         function handleRefresh() {
             if (checkConnection()) {
-                location.reload();
+                const redirectUrl = '${redirectUrl}';
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
             } else {
                 const button = document.querySelector('button');
                 button.classList.add('shake');
@@ -136,17 +140,29 @@ function generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, p
             }
         }
 
-        // Add online/offline event listeners
+        // Add online event listener for automatic redirect
         window.addEventListener('online', () => {
-            const button = document.querySelector('button');
-            button.style.opacity = '1';
-            button.style.cursor = 'pointer';
+            const redirectUrl = '${redirectUrl}';
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
         });
 
+        // Update UI when offline
         window.addEventListener('offline', () => {
             const button = document.querySelector('button');
             button.style.opacity = '0.7';
             button.style.cursor = 'not-allowed';
+        });
+
+        // Check connection status on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (checkConnection()) {
+                const redirectUrl = '${redirectUrl}';
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            }
         });
     </script>
 </head>
@@ -180,8 +196,9 @@ function generateHTML() {
     const buttonTextColor = document.getElementById('buttonTextColor').value;
     const buttonColor = document.getElementById('buttonColor').value;
     const buttonHoverColor = document.getElementById('buttonHoverColor').value;
+    const redirectUrl = document.getElementById('redirectUrl').value;
 
-    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
+    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor, redirectUrl);
 
     const blob = new Blob([html], { type: 'text/html' });
     const url = window.URL.createObjectURL(blob);
@@ -205,8 +222,9 @@ function copyCode() {
     const buttonTextColor = document.getElementById('buttonTextColor').value;
     const buttonColor = document.getElementById('buttonColor').value;
     const buttonHoverColor = document.getElementById('buttonHoverColor').value;
+    const redirectUrl = document.getElementById('redirectUrl').value;
 
-    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor);
+    const html = generatePreviewHTML(title, bgColor, heading, headingColor, paragraph, paragraphColor, buttonText, buttonTextColor, buttonColor, buttonHoverColor, redirectUrl);
 
     navigator.clipboard.writeText(html).then(() => {
         const copyBtn = document.querySelector('.btn-copy');
