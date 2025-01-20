@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Page Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="builder-container">
+        <div class="sidebar">
+            <div class="form-group">
+                <label for="pageTitle">Page Title</label>
+                <input type="text" id="pageTitle" value="No Connection" placeholder="Enter page title">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="backgroundColor">Background Color</label>
+                    <input type="text" id="backgroundColor" value="#FFFFFF" placeholder="Enter hex color">
+                </div>
+                <div class="form-group">
+                    <label for="headingColor">Heading Color</label>
+                    <input type="text" id="headingColor" value="#000000" placeholder="Enter hex color">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="heading">Heading Text</label>
+                <input type="text" id="heading" value="No Connection" placeholder="Enter heading text">
+            </div>
+            <div class="form-group">
+                <label for="paragraph">Paragraph Text</label>
+                <input type="text" id="paragraph" value="Check your internet connection and try again" placeholder="Enter paragraph text">
+            </div>
+            <div class="form-group">
+                <label for="paragraphColor">Paragraph Color</label>
+                <input type="text" id="paragraphColor" value="#666666" placeholder="Enter hex color">
+            </div>
+            <div class="form-group">
+                <label for="buttonText">Button Text</label>
+                <input type="text" id="buttonText" value="Try Again" placeholder="Enter button text">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="buttonColor">Button Color</label>
+                    <input type="text" id="buttonColor" value="#1a73e8" placeholder="Enter hex color">
+                </div>
+                <div class="form-group">
+                    <label for="buttonHoverColor">Button Hover</label>
+                    <input type="text" id="buttonHoverColor" value="#1557b0" placeholder="Enter hex color">
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn" onclick="generateHTML()">Download HTML</button>
+                <button class="btn btn-copy" onclick="copyCode()">Copy Code</button>
+            </div>
+        </div>
+        <div class="preview-area">
+            <div class="preview-container">
+                <iframe id="preview-frame" class="preview-frame"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+  </html>
