@@ -3,8 +3,7 @@ class NotifyGen {
         this.notifications = [];
         this.currentTheme = localStorage.getItem('theme') || 'light';
         this.maxImages = 4;
-        this.currentTime = "2025-01-20 23:33:01";
-        this.currentUser = "ssayeb7";
+        this.currentTime = "2025-01-20 02:43";
         this.urlRegex = /(https?:\/\/[^\s]+)/g;
         this.init();
     }
@@ -68,7 +67,6 @@ class NotifyGen {
                 expiresAt: this.calculateExpiryTime(expiresMinutes),
                 images,
                 read: false,
-                createdBy: this.currentUser
             };
             
             this.addNotification(notification);
@@ -260,7 +258,6 @@ class NotifyGen {
                 <div class="notification-meta">
                     <span>${this.formatTimeAgo(notification.timestamp)}</span>
                     ${notification.expiresAt ? `<span>Expires: ${new Date(notification.expiresAt).toLocaleString()}</span>` : ''}
-                    <span>By: ${notification.createdBy}</span>
                 </div>
             </div>
         `;
@@ -284,7 +281,6 @@ class NotifyGen {
                         </div>
                     ` : ''}
                     <div class="notification-meta">
-                        <span>Created by: ${notification.createdBy}</span>
                         <span>Created: ${new Date(notification.timestamp).toLocaleString()}</span>
                         ${notification.expiresAt ? `<span>Expires: ${new Date(notification.expiresAt).toLocaleString()}</span>` : ''}
                     </div>
