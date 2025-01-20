@@ -878,6 +878,10 @@ select:focus {
     transform: scale(1.02);
 }
 
+textarea#message {
+    resize: none;
+}
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -950,5 +954,192 @@ select:focus {
     .popup-close,
     .modal-backdrop {
         display: none;
+    }
+}
+/* Mobile Responsive Adjustments */
+@media (max-width: 1024px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .split-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Container */
+    .container {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+
+    .icon-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    /* Form Section */
+    .form-section {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Image Upload */
+    .image-upload-container {
+        padding: 1.5rem;
+    }
+
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.75rem;
+    }
+
+    /* Form Actions */
+    .form-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+
+    /* JSON Section */
+    .json-section {
+        padding: 1.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Notification List */
+    .notification-list {
+        width: calc(100% - 2rem);
+        left: 1rem;
+        right: 1rem;
+        max-height: 80vh;
+    }
+
+    /* Modal Content */
+    .gallery-modal-content,
+    .help-content,
+    .notification-popup {
+        width: 95%;
+        padding: 1.25rem;
+        margin: 1rem;
+    }
+
+    .gallery-close,
+    .popup-close,
+    .detail-close {
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    /* Help Sections */
+    .help-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Detail Views */
+    .detail-header {
+        padding: 1rem;
+    }
+
+    .detail-content {
+        padding: 1rem;
+    }
+
+    .detail-meta,
+    .notification-meta {
+        grid-template-columns: 1fr;
+        padding: 0.75rem;
+    }
+
+    .detail-images,
+    .notification-popup-images {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further refinements for very small screens */
+    .container {
+        padding: 0.75rem;
+    }
+
+    .form-section,
+    .json-section {
+        padding: 1rem;
+    }
+
+    .notification-item {
+        padding: 0.75rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .help-section h4 {
+        font-size: 1rem;
+    }
+
+    .notification-detail h3 {
+        font-size: 1.15rem;
+    }
+
+    .image-upload-container {
+        padding: 1.25rem;
+    }
+
+    .image-upload-container i {
+        font-size: 2rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .btn:active,
+    .icon-btn:active {
+        transform: scale(0.95);
+    }
+
+    .help-section li:active {
+        transform: translateX(2px);
+    }
+
+    .image-preview:active {
+        opacity: 0.8;
+    }
+}
+
+/* Landscape Mode Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    .notification-popup,
+    .help-content {
+        height: 95vh;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .notification-popup-content {
+        max-height: calc(95vh - 120px);
     }
 }
