@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Connection</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: system-ui, sans-serif;
+            background: #FFFFFF;
+        }
+        body {
+            display: grid;
+            place-items: center;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        .network-icon {
+            position: relative;
+            display: inline-flex;
+            margin: 1rem 0 2rem;
+        }
+        .signal {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 45px;
+        }
+        .bar {
+            width: 6px;
+            background: #ddd;
+            border-radius: 1px;
+            animation: pulse 2s infinite;
+        }
+        .bar-1 { height: 12px; }
+        .bar-2 { height: 20px; animation-delay: .2s; }
+        .bar-3 { height: 28px; animation-delay: .4s; }
+        .bar-4 { height: 36px; animation-delay: .6s; }
+        .alert {
+            position: absolute;
+            bottom: -5px;
+            right: -10px;
+            width: 14px;
+            height: 14px;
+            background: #ff3b30;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            display: grid;
+            place-items: center;
+        }
+        h1, p {
+            margin: 0 0 .5rem;
+        }
+        h1 {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        p {
+            color: #666666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        button {
+            background: #1a73e8;
+            color: #FFFFFF;
+            border: none;
+            padding: .8rem 2rem;
+            border-radius: 25px;
+            font-size: .9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .2s;
+        }
+        button:hover {
+            background: #1557b0;
+            transform: translateY(-1px);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: .3; }
+            50% { opacity: .8; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+    </style>
+    <script>
+        // Function to check internet connection
+        function checkConnection() {
+            return navigator.onLine;
+        }
+
+        // Function to handle refresh
+        function handleRefresh() {
+            if (checkConnection()) {
+                location.reload();
+            } else {
+                const button = document.querySelector('button');
+                button.classList.add('shake');
+                setTimeout(() => {
+                    button.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        // Add online/offline event listeners
+        window.addEventListener('online', () => {
+            const button = document.querySelector('button');
+            button.style.opacity = '1';
+            button.style.cursor = 'pointer';
+        });
+
+        window.addEventListener('offline', () => {
+            const button = document.querySelector('button');
+            button.style.opacity = '0.7';
+            button.style.cursor = 'not-allowed';
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="network-icon">
+            <div class="signal">
+                <div class="bar bar-1"></div>
+                <div class="bar bar-2"></div>
+                <div class="bar bar-3"></div>
+                <div class="bar bar-4"></div>
+            </div>
+            <div class="alert">!</div>
+        </div>
+        <h1>No Connection</h1>
+        <p>Check your internet connection and try again</p>
+        <button onclick="handleRefresh()">Try Again</button>
+    </div>
+</body>
+</html>
