@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotifyGen - Notification Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="notification-system">
+            <div class="controls">
+                <button id="notificationIcon" class="icon-btn" title="View Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-count">0</span>
+                </button>
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="helpBtn" class="icon-btn" title="Help">
+                    <i class="fas fa-question"></i>
+                </button>
+                <button id="clearDataBtn" class="icon-btn" title="Clear All Data">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+
+            <div class="split-layout">
+                <!-- Left side - Form -->
+                <div class="form-section">
+                    <form id="notificationForm" class="notification-form">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" required placeholder="Enter notification title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required placeholder="Enter notification message"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tag">Tag (optional)</label>
+                                <select id="tag">
+                                    <option value="" selected>Select a tag</option>
+                                    <option value="maintenance" class="tag-maintenance">#maintenance</option>
+                                    <option value="update" class="tag-update">#update</option>
+                                    <option value="security" class="tag-security">#security</option>
+                                    <option value="announcement" class="tag-announcement">#announcement</option>
+                                    <option value="alert" class="tag-alert">#alert</option>
+                                    <option value="general" class="tag-general">#general</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expiresAt">Expires In (minutes)</label>
+                                <input type="number" id="expiresAt" min="1" placeholder="Never expires if empty">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Images (max 4)</label>
+                            <div id="imageUpload" class="image-upload-container">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload images or drag & drop</p>
+                                <input type="file" id="images" multiple accept="image/*" style="display: none;">
+                            </div>
+                            <div id="imagePreviewGrid" class="image-preview-grid"></div>
+                        </div>
+
+                        <div id="urlPreviewContainer" class="url-preview-container"></div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Submit
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right side - JSON Preview -->
+                <div class="json-section">
+                    <div class="section-header">
+                        <h3>JSON Output</h3>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="copyJson">
+                                <i class="fas fa-copy"></i> Copy JSON
+                            </button>
+                            <button class="btn btn-secondary" id="downloadJson">
+                                <i class="fas fa-download"></i> Download JSON
+                            </button>
+                        </div>
+                    </div>
+                    <pre id="jsonOutput" class="json-output"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
