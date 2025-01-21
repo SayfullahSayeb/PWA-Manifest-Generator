@@ -56,6 +56,7 @@
             </div>
         </div>
     </div>
+    <div id="qrcode-container"></div>
 
     <!-- Copy Notification -->
     <div class="notification" id="copyNotification">
@@ -124,6 +125,25 @@ self.addEventListener('fetch', (event) => {
     <footer style="text-align: center; padding: 10px; ">
         <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #000000;">Github</a>.</p>
     </footer>
+    <script>
+        fetch('qrcode.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('qrcode-container').innerHTML = data;
+                const qrText = document.getElementById('qr-text'), qrCodeDiv = document.getElementById('qr-code');
+                document.getElementById('qr-button').onclick = () => document.getElementById('qr-popup').classList.add('active');
+                qrText.oninput = () => {
+                    qrCodeDiv.innerHTML = '';
+                    if (qrText.value.trim()) new QRCode(qrCodeDiv, { text: qrText.value, width: 200, height: 200 });
+                    document.getElementById('download-btn').disabled = !qrText.value.trim();
+                };
+                document.head.appendChild(Object.assign(document.createElement('script'), { src: "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" }));
+            })
+            .catch(console.error);
+    </script>
+    
+    
+    
     <script src="main.js"></script>
 </body>
 </html>
