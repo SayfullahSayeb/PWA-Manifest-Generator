@@ -3,329 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator with Layouts</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f0f2f5;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-
-        .input-section {
-            margin-bottom: 1.5rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus {
-            border-color: #4CAF50;
-        }
-
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-            margin: 5px;
-        }
-
-        button:hover {
-            background: #45a049;
-        }
-
-        .layout-options {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-
-        .layout-option {
-            border: 2px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .layout-option.active {
-            border-color: #4CAF50;
-            background: #e8f5e9;
-        }
-
-        .qr-container {
-            position: relative;
-            display: inline-block;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        /* Layout Styles */
-        .layout-1 {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-
-        .layout-2 {
-            background: linear-gradient(145deg, #f0f0f0, #ffffff);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff;
-        }
-
-        .layout-3 {
-            background: white;
-            padding: 20px;
-            border: 3px solid #4CAF50;
-            border-radius: 15px;
-        }
-
-        .layout-4 {
-            background: white;
-            padding: 20px;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
-        }
-
-        .scan-text {
-            font-weight: bold;
-            color: #333;
-            margin: 10px 0;
-            font-size: 1.2em;
-        }
-
-        #downloadBtn {
-            background: #2196F3;
-        }
-
-        #downloadBtn:hover {
-            background: #1976D2;
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #qrWrapper {
-            display: none;
-        }
-
-        .error {
-            color: #ff3333;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            display: none;
-        }
-    </style>
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include QR Code library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>QR Code Generator</h1>
-        <div class="input-section">
-            <input type="text" id="qrInput" placeholder="Enter text or URL">
-            <button onclick="generateQR()">Generate QR Code</button>
-            <p class="error" id="error">Please enter some text!</p>
-        </div>
+    <!-- Floating button -->
+    <button id="qr-button" class="qr-float-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M7 7h.01"/>
+            <path d="M17 7h.01"/>
+            <path d="M7 17h.01"/>
+            <rect x="10" y="10" width="4" height="4"/>
+        </svg>
+    </button>
 
-        <div class="layout-options">
-            <div class="layout-option active" data-layout="1">
-                <small>Simple</small>
-            </div>
-            <div class="layout-option" data-layout="2">
-                <small>Neumorphic</small>
-            </div>
-            <div class="layout-option" data-layout="3">
-                <small>Bordered</small>
-            </div>
-            <div class="layout-option" data-layout="4">
-                <small>Circular</small>
-            </div>
+    <!-- QR Code Generator Popup -->
+    <div id="qr-popup" class="qr-popup">
+        <div class="qr-popup-header">
+            <h3>QR Code Generator</h3>
+            <button id="close-popup" class="close-btn">&times;</button>
         </div>
-
-        <div class="loader" id="loader"></div>
-        
-        <div id="qrWrapper">
-            <div id="qrContainer" class="qr-container layout-1">
-                <p class="scan-text">Scan Me</p>
-                <img src="" id="qrImage" alt="QR Code" style="max-width: 200px;">
-                <p class="scan-text">👆</p>
-            </div>
-            <button id="downloadBtn" onclick="downloadQR()">Download QR Code</button>
+        <div class="qr-popup-content">
+            <input type="text" id="qr-text" placeholder="Enter your text or URL">
+            <div id="qr-code"></div>
+            <button id="download-btn" class="download-btn" disabled>Download QR Code</button>
         </div>
     </div>
 
-    <script>
-        const qrInput = document.getElementById('qrInput');
-        const qrImage = document.getElementById('qrImage');
-        const qrWrapper = document.getElementById('qrWrapper');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const error = document.getElementById('error');
-        const loader = document.getElementById('loader');
-        const qrContainer = document.getElementById('qrContainer');
-
-        // Layout selection
-        document.querySelectorAll('.layout-option').forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove active class from all options
-                document.querySelectorAll('.layout-option').forEach(opt => {
-                    opt.classList.remove('active');
-                });
-                // Add active class to selected option
-                option.classList.add('active');
-                // Update QR container layout
-                qrContainer.className = `qr-container layout-${option.dataset.layout}`;
-            });
-        });
-
-        function generateQR() {
-            const inputValue = qrInput.value.trim();
-            
-            if (!inputValue) {
-                error.style.display = 'block';
-                qrWrapper.style.display = 'none';
-                return;
-            }
-
-            error.style.display = 'none';
-            qrWrapper.style.display = 'none';
-            loader.style.display = 'block';
-            
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inputValue)}`;
-            
-            qrImage.src = qrApiUrl;
-            qrImage.onload = function() {
-                loader.style.display = 'none';
-                qrWrapper.style.display = 'block';
-            };
-        }
-
-        function downloadQR() {
-            // Create a new canvas element
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Set canvas size to match the QR container
-            const container = document.getElementById('qrContainer');
-            const styles = window.getComputedStyle(container);
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight;
-
-            // Draw background
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the QR container background and styles
-            ctx.fillStyle = styles.backgroundColor;
-            if (container.classList.contains('layout-2')) {
-                // Create gradient for neumorphic effect
-                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                gradient.addColorStop(0, '#f0f0f0');
-                gradient.addColorStop(1, '#ffffff');
-                ctx.fillStyle = gradient;
-            }
-
-            // Apply the current layout's border radius
-            const borderRadius = parseInt(styles.borderRadius);
-            ctx.beginPath();
-            ctx.roundRect(0, 0, canvas.width, canvas.height, borderRadius);
-            ctx.fill();
-
-            // Draw the QR code
-            ctx.drawImage(qrImage, 
-                (canvas.width - qrImage.width) / 2,
-                (canvas.height - qrImage.height) / 2
-            );
-
-            // Add "Scan Me" text
-            ctx.fillStyle = '#333';
-            ctx.font = 'bold 16px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('Scan Me', canvas.width / 2, 30);
-            ctx.fillText('👆', canvas.width / 2, canvas.height - 20);
-
-            // Convert to blob and download
-            canvas.toBlob((blob) => {
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.download = 'qrcode-styled.png';
-                link.href = url;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            });
-        }
-
-        // Generate QR code when Enter key is pressed
-        qrInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                generateQR();
-            }
-        });
-
-        // Clear error message when user starts typing
-        qrInput.addEventListener('input', () => {
-            error.style.display = 'none';
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
