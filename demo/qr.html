@@ -5,30 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PWA QR Install</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="manifest" href="../manifest.json">
-    <!-- QR Code Generator Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script src="app.js" defer></script>
 </head>
 <body class="bg-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4">
-        <!-- QR Code Generator Card -->
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-gray-800 mb-4">PWA Install QR Code</h1>
                 
-                <!-- Current URL Display -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Your PWA URL:</label>
                     <div id="currentUrl" class="text-sm text-gray-600 bg-gray-50 p-3 rounded-md break-all"></div>
                 </div>
 
-                <!-- QR Code Display -->
                 <div id="qrContainer" class="flex justify-center my-6">
                     <div id="qrCode" class="p-4 bg-white border-2 border-dashed border-gray-200 rounded-lg"></div>
                 </div>
 
-                <!-- Download Button -->
                 <button id="downloadQrBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 flex items-center justify-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
