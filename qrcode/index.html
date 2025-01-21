@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Include QR Code library -->
+    <style>
+*{margin:0;padding:0;box-sizing:border-box}
+.qr-float-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;border-radius:50%;background-color:#4CAF50;color:white;border:none;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;transition:transform 0.3s ease}
+.qr-float-btn:hover{transform:scale(1.1)}
+.qr-popup{display:none;position:fixed;bottom:100px;right:30px;width:300px;background-color:white;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:1000}
+.qr-popup.active{display:block;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(100px);opacity:0}
+to{transform:translateY(0);opacity:1}
+}
+.qr-popup-header{padding:15px;background-color:#4CAF50;color:white;border-radius:10px 10px 0 0;display:flex;justify-content:space-between;align-items:center}
+.close-btn{background:none;border:none;color:white;font-size:24px;cursor:pointer}
+.qr-popup-content{padding:20px;display:flex;flex-direction:column;align-items:center;gap:15px}
+#qr-text{width:100%;padding:10px;border:1px solid #ddd;border-radius:5px;font-size:14px}
+#qr-code{margin:10px 0;padding:10px;background-color:white;border-radius:5px}
+.download-btn{padding:10px 20px;background-color:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;transition:background-color 0.3s ease}
+.download-btn:disabled{background-color:#cccccc;cursor:not-allowed}
+.download-btn:hover:not(:disabled){background-color:#45a049}
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-    <!-- Floating button -->
     <button id="qr-button" class="qr-float-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -20,7 +35,6 @@
         </svg>
     </button>
 
-    <!-- QR Code Generator Popup -->
     <div id="qr-popup" class="qr-popup">
         <div class="qr-popup-header">
             <h3>QR Code Generator</h3>
@@ -32,7 +46,69 @@
             <button id="download-btn" class="download-btn" disabled>Download QR Code</button>
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const qrButton = document.getElementById('qr-button');
+    const qrPopup = document.getElementById('qr-popup');
+    const closePopup = document.getElementById('close-popup');
+    const qrText = document.getElementById('qr-text');
+    const qrCodeDiv = document.getElementById('qr-code');
+    const downloadBtn = document.getElementById('download-btn');
+    
+    let qrCode = null;
 
-    <script src="main.js"></script>
+    qrButton.addEventListener('click', () => {
+        qrPopup.classList.add('active');
+    });
+
+    closePopup.addEventListener('click', () => {
+        qrPopup.classList.remove('active');
+    });
+
+    qrText.addEventListener('input', () => {
+        const text = qrText.value.trim();
+        
+        qrCodeDiv.innerHTML = '';
+        
+        if (text) {
+            qrCode = new QRCode(qrCodeDiv, {
+                text: text,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            downloadBtn.disabled = false;
+        } else {
+            qrCode = null;
+            downloadBtn.disabled = true;
+        }
+    });
+
+    // Download QR Code
+    downloadBtn.addEventListener('click', () => {
+        if (!qrCode) return;
+
+        // Get the QR code image
+        const qrCanvas = qrCodeDiv.querySelector('canvas');
+        
+        // Create a temporary link
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = qrCanvas.toDataURL('image/png');
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!qrPopup.contains(e.target) && !qrButton.contains(e.target)) {
+            qrPopup.classList.remove('active');
+        }
+    });
+});
+</script>
 </body>
 </html>
