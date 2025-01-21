@@ -132,17 +132,48 @@ self.addEventListener('fetch', (event) => {
                 document.getElementById('qrcode-container').innerHTML = data;
                 const qrText = document.getElementById('qr-text'), 
                       qrCodeDiv = document.getElementById('qr-code'),
-                      qrPopup = document.getElementById('qr-popup');
+                      qrPopup = document.getElementById('qr-popup'),
+                      downloadBtn = document.getElementById('download-btn');
+                
+                qrCodeDiv.style.backgroundColor = 'transparent';
+                qrCodeDiv.style.transition = 'background-color 0.3s ease';
                 
                 document.getElementById('qr-button').onclick = () => qrPopup.classList.add('active');
-                document.getElementById('close-popup').onclick = () => qrPopup.classList.remove('active'); // Added close button functionality
+                document.getElementById('close-popup').onclick = () => qrPopup.classList.remove('active');
                 
                 qrText.oninput = () => {
                     qrCodeDiv.innerHTML = '';
-                    if (qrText.value.trim()) new QRCode(qrCodeDiv, { text: qrText.value, width: 200, height: 200 });
-                    document.getElementById('download-btn').disabled = !qrText.value.trim();
+                    qrCodeDiv.style.backgroundColor = 'transparent';
+                    
+                    if (qrText.value.trim()) {
+                        new QRCode(qrCodeDiv, { 
+                            text: qrText.value, 
+                            width: 200, 
+                            height: 200 
+                        });
+                        qrCodeDiv.style.backgroundColor = 'white';
+                        downloadBtn.disabled = false;
+                    } else {
+                        downloadBtn.disabled = true;
+                    }
                 };
-                document.head.appendChild(Object.assign(document.createElement('script'), { src: "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" }));
+    
+                // Add download button functionality
+                downloadBtn.addEventListener('click', () => {
+                    const qrCanvas = qrCodeDiv.querySelector('canvas');
+                    if (qrCanvas) {
+                        const link = document.createElement('a');
+                        link.download = 'qrcode.png';
+                        link.href = qrCanvas.toDataURL('image/png');
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
+                });
+    
+                document.head.appendChild(Object.assign(document.createElement('script'), { 
+                    src: "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" 
+                }));
             })
             .catch(console.error);
     </script>

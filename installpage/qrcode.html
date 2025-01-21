@@ -15,8 +15,17 @@ body{margin:0}
 .close-btn{background:none;border:none;color:white;font-size:28px;cursor:pointer}
 .qr-popup-content{padding:25px;display:flex;flex-direction:column;align-items:center;gap:20px}
 #qr-text{width:100%;padding:12px;border:1px solid #3F51B5;border-radius:8px;font-size:15px;background-color:#252542;color:white}
-#qr-code{margin:15px 0;padding:15px;background-color:white;border-radius:8px}
-.download-btn{padding:12px 25px;background-color:#3F51B5;color:white;border:none;border-radius:8px;cursor:pointer;transition:background-color 0.3s ease}
+#qr-code{
+    margin:15px 0;
+    padding:15px;
+    border-radius:8px;
+    background-color:transparent; 
+    transition: background-color 0.3s ease;
+}
+
+#qr-code.has-qr{
+    background-color:white;
+}.download-btn{padding:12px 25px;background-color:#3F51B5;color:white;border:none;border-radius:8px;cursor:pointer;transition:background-color 0.3s ease}
 .download-btn:disabled{background-color:#424242;cursor:not-allowed}
 .download-btn:hover:not(:disabled){background-color:#1A237E}
     </style>
@@ -45,17 +54,17 @@ body{margin:0}
         </div>
     </div>
 <script>
-    function initializeQRCode() {
-        const qrButton = document.getElementById('qr-button');
-        const qrPopup = document.getElementById('qr-popup');
-        const closePopup = document.getElementById('close-popup');
-        const qrText = document.getElementById('qr-text');
-        const qrCodeDiv = document.getElementById('qr-code');
-        const downloadBtn = document.getElementById('download-btn');
-        
-        let qrCode = null;
+function initializeQRCode() {
+    const qrButton = document.getElementById('qr-button');
+    const qrPopup = document.getElementById('qr-popup');
+    const closePopup = document.getElementById('close-popup');
+    const qrText = document.getElementById('qr-text');
+    const qrCodeDiv = document.getElementById('qr-code');
+    const downloadBtn = document.getElementById('download-btn');
+    
+    let qrCode = null;
 
-        qrButton.addEventListener('click', () => {
+    qrButton.addEventListener('click', () => {
         if (qrPopup.classList.contains('active')) {
             qrPopup.classList.remove('active');
         } else {
@@ -63,57 +72,59 @@ body{margin:0}
         }
     });
 
-        closePopup.addEventListener('click', () => {
+    closePopup.addEventListener('click', () => {
+        qrPopup.classList.remove('active');
+    });
+
+    qrText.addEventListener('input', () => {
+        const text = qrText.value.trim();
+        
+        qrCodeDiv.innerHTML = '';
+        qrCodeDiv.classList.remove('has-qr'); // Remove white background
+        
+        if (text) {
+            qrCode = new QRCode(qrCodeDiv, {
+                text: text,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            downloadBtn.disabled = false;
+            qrCodeDiv.classList.add('has-qr'); // Add white background when QR is generated
+        } else {
+            qrCode = null;
+            downloadBtn.disabled = true;
+        }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+        if (!qrCode) return;
+
+        const qrCanvas = qrCodeDiv.querySelector('canvas');
+        
+        const link = document.createElement('a');
+        link.download = 'qrcode.png';
+        link.href = qrCanvas.toDataURL('image/png');
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!qrPopup.contains(e.target) && !qrButton.contains(e.target)) {
             qrPopup.classList.remove('active');
-        });
+        }
+    });
+}
 
-        qrText.addEventListener('input', () => {
-            const text = qrText.value.trim();
-            
-            qrCodeDiv.innerHTML = '';
-            
-            if (text) {
-                qrCode = new QRCode(qrCodeDiv, {
-                    text: text,
-                    width: 200,
-                    height: 200,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-                downloadBtn.disabled = false;
-            } else {
-                qrCode = null;
-                downloadBtn.disabled = true;
-            }
-        });
-
-        downloadBtn.addEventListener('click', () => {
-            if (!qrCode) return;
-
-            const qrCanvas = qrCodeDiv.querySelector('canvas');
-            
-            const link = document.createElement('a');
-            link.download = 'qrcode.png';
-            link.href = qrCanvas.toDataURL('image/png');
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!qrPopup.contains(e.target) && !qrButton.contains(e.target)) {
-                qrPopup.classList.remove('active');
-            }
-        });
-    }
-
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        initializeQRCode();
-    } else {
-        document.addEventListener('DOMContentLoaded', initializeQRCode);
-    }
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initializeQRCode();
+} else {
+    document.addEventListener('DOMContentLoaded', initializeQRCode);
+}
 </script>
 </body>
 </html>
