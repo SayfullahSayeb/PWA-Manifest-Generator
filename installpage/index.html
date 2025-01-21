@@ -130,8 +130,13 @@ self.addEventListener('fetch', (event) => {
             .then(response => response.text())
             .then(data => {
                 document.getElementById('qrcode-container').innerHTML = data;
-                const qrText = document.getElementById('qr-text'), qrCodeDiv = document.getElementById('qr-code');
-                document.getElementById('qr-button').onclick = () => document.getElementById('qr-popup').classList.add('active');
+                const qrText = document.getElementById('qr-text'), 
+                      qrCodeDiv = document.getElementById('qr-code'),
+                      qrPopup = document.getElementById('qr-popup');
+                
+                document.getElementById('qr-button').onclick = () => qrPopup.classList.add('active');
+                document.getElementById('close-popup').onclick = () => qrPopup.classList.remove('active'); // Added close button functionality
+                
                 qrText.oninput = () => {
                     qrCodeDiv.innerHTML = '';
                     if (qrText.value.trim()) new QRCode(qrCodeDiv, { text: qrText.value, width: 200, height: 200 });
@@ -141,9 +146,6 @@ self.addEventListener('fetch', (event) => {
             })
             .catch(console.error);
     </script>
-    
-    
-    
     <script src="main.js"></script>
 </body>
 </html>
