@@ -1,30 +1,28 @@
 // app.js
 document.addEventListener('DOMContentLoaded', () => {
-    // Get DOM elements
     const elements = {
-        currentUrl: document.getElementById('currentUrl'),
+        pwaUrl: document.getElementById('pwaUrl'),
+        generateBtn: document.getElementById('generateBtn'),
+        qrContainer: document.getElementById('qrContainer'),
         qrCode: document.getElementById('qrCode'),
         downloadQrBtn: document.getElementById('downloadQrBtn')
     };
 
-    // Get current URL
-    const currentUrl = window.location.href;
-    
-    // Display current URL
-    if (elements.currentUrl) {
-        elements.currentUrl.textContent = currentUrl;
-    }
-
-    // Generate QR Code
-    function generateQRCode() {
+    function generateQRCode(url) {
         if (!elements.qrCode) return;
 
         // Clear previous QR code
         elements.qrCode.innerHTML = '';
 
+        // Add PWA installation parameters to URL
+        const installUrl = new URL(url);
+        // Add parameters that trigger PWA install prompt
+        installUrl.searchParams.set('mode', 'pwa');
+        installUrl.searchParams.set('source', 'qr');
+
         // Create QR code
         const qr = qrcode(0, 'M');
-        qr.addData(currentUrl);
+        qr.addData(installUrl.toString());
         qr.make();
 
         // Create QR code image
@@ -37,9 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img.id = 'qrCodeImage';
             img.classList.add('mx-auto');
         }
+
+        // Show QR container
+        elements.qrContainer.classList.remove('hidden');
     }
 
-    // Download QR Code
     function downloadQRCode() {
         const img = document.getElementById('qrCodeImage');
         if (!img) return;
@@ -65,10 +65,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listeners
-    if (elements.downloadQrBtn) {
-        elements.downloadQrBtn.addEventListener('click', downloadQRCode);
-    }
+    elements.generateBtn.addEventListener('click', () => {
+        const url = elements.pwaUrl.value.trim();
+        
+        if (!url) {
+            alert('Please enter a valid PWA URL');
+            return;
+        }
 
-    // Generate QR code on page load
-    generateQRCode();
+        try {
+            new URL(url); // Validate URL
+            generateQRCode(url);
+        } catch (e) {
+            alert('Please enter a valid URL');
+        }
+    });
+
+    elements.downloadQrBtn?.addEventListener('click', downloadQRCode);
+
+    // Add Enter key support
+    elements.pwaUrl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            elements.generateBtn.click();
+        }
+    });
 });
