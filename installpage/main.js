@@ -187,7 +187,7 @@ function generateStyles(buttonColor, backgroundColor, containerColor, isPreview 
     // Update preview
     function updatePreview() {
         const params = {
-            iconURL: iconURLInput.value || 'icon.png',
+            iconURL: iconURLInput.value || 'https://pwa.zneloy.site/src/icon.png',
             buttonColor: buttonColorInput.value || '#4F46E5',
             backgroundColor: backgroundColorInput.value || '#F3F4F6',
             containerColor: containerColorInput.value || '#FFFFFF',
