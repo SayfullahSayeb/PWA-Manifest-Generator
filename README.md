@@ -2,8 +2,6 @@
 
 A simple and intuitive tool to generate Web App Manifests for Progressive Web Applications (PWAs).
 
-**Last Updated**: 2025-01-18  
-
 ## Overview
 
 PWA Manifest Generator helps developers create valid `manifest.json` files through a user-friendly interface. It provides real-time preview and instant JSON output, making PWA configuration straightforward and efficient.
@@ -42,12 +40,6 @@ PWA Manifest Generator helps developers create valid `manifest.json` files throu
 - Icons and Screenshots
 - Categories
 
-## Browser Support
-
-- Chrome 67+
-- Firefox 63+
-- Safari 11.1+
-- Edge 79+
 
 ## Contributing
 
