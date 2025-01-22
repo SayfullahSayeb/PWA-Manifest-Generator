@@ -54,6 +54,9 @@
             <div class="preview-container">
                 <iframe class="preview-frame" src="about:blank"></iframe>
             </div>
+            <footer style="text-align: center; padding: 10px; ">
+                <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #000000;">Github</a>.</p>
+            </footer>
         </div>
     </div>
     <div id="qrcode-container"></div>
@@ -122,9 +125,7 @@ self.addEventListener('fetch', (event) => {
             </ul>
         </div>
     </div>
-    <footer style="text-align: center; padding: 10px; ">
-        <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #000000;">Github</a>.</p>
-    </footer>
+
     <script>
         fetch('qrcode.html')
             .then(response => response.text())
