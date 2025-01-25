@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/icon.png" type="image/png">
     <title>No Connection</title>
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -14,35 +16,56 @@
             font-family: system-ui, sans-serif;
             background: #FFFFFF;
         }
+
         body {
             display: grid;
             place-items: center;
         }
+
         .container {
             text-align: center;
             padding: 2rem;
         }
+
         .network-icon {
             position: relative;
             display: inline-flex;
             margin: 1rem 0 2rem;
         }
+
         .signal {
             display: flex;
             align-items: flex-end;
             gap: 3px;
             height: 45px;
         }
+
         .bar {
             width: 6px;
             background: #ddd;
             border-radius: 1px;
             animation: pulse 2s infinite;
         }
-        .bar-1 { height: 12px; }
-        .bar-2 { height: 20px; animation-delay: .2s; }
-        .bar-3 { height: 28px; animation-delay: .4s; }
-        .bar-4 { height: 36px; animation-delay: .6s; }
+
+        .bar-1 {
+            height: 12px;
+        }
+
+        .bar-2 {
+            height: 20px;
+            animation-delay: .2s;
+        }
+
+        .bar-3 {
+            height: 28px;
+            animation-delay: .4s;
+        }
+
+        .bar-4 {
+            height: 36px;
+            animation-delay: .6s;
+        }
+
         .alert {
             position: absolute;
             bottom: -5px;
@@ -57,19 +80,24 @@
             display: grid;
             place-items: center;
         }
-        h1, p {
+
+        h1,
+        p {
             margin: 0 0 .5rem;
         }
+
         h1 {
             color: #000000;
             font-size: 1.5rem;
             font-weight: 600;
         }
+
         p {
             color: #666666;
             margin-bottom: 2rem;
             font-size: 1rem;
         }
+
         button {
             background: #1a73e8;
             color: #FFFFFF;
@@ -81,26 +109,47 @@
             cursor: pointer;
             transition: .2s;
         }
+
         button:hover {
             background: #1557b0;
             transform: translateY(-1px);
         }
+
         @keyframes pulse {
-            0%, 100% { opacity: .3; }
-            50% { opacity: .8; }
+
+            0%,
+            100% {
+                opacity: .3;
+            }
+
+            50% {
+                opacity: .8;
+            }
         }
+
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
+
         .shake {
             animation: shake 0.5s;
         }
     </style>
     <script>
         let isOnline = navigator.onLine;
-        const redirectUrl = 'https://pwa.zneloy.site/offlinepage/';
+        const redirectUrl = '/pagebuilder/offlinepage.html';
 
         function checkConnection() {
             return navigator.onLine;
@@ -139,6 +188,7 @@
         });
     </script>
 </head>
+
 <body>
     <div class="container">
         <div class="network-icon">
@@ -155,4 +205,5 @@
         <button onclick="handleRefresh()">Try Again</button>
     </div>
 </body>
+
 </html>

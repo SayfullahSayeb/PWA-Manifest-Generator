@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <title>PWA Manifest Generator</title>
     <link rel="stylesheet" href="pwa-assets/styles.css">
 </head>
+
 <body>
     <h1>PWA Manifest Generator</h1>
     <div id="container">
@@ -63,7 +65,7 @@
                         <input type="text" id="lang" placeholder="en-US" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group inline">
                     <div>
                         <label for="displayMode">Display Mode:</label>
@@ -83,7 +85,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group inline">
                     <div>
                         <label for="category">Category:</label>
@@ -142,7 +144,7 @@
         <!-- 2nd column: Mobile Frame -->
         <div class="mobile-frame">
             <div class="mobile-notch"></div>
-            <div class="mobile-status-bar"> 
+            <div class="mobile-status-bar">
                 <div class="status-left">
                     <span class="time" id="currentTime"></span>
                 </div>
@@ -150,30 +152,34 @@
                     <!-- Signal SVG -->
                     <span class="signal">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                            <rect x="2" y="16" width="4" height="4"/>
-                            <rect x="8" y="12" width="4" height="8"/>
-                            <rect x="14" y="8" width="4" height="12"/>
-                            <rect x="20" y="4" width="4" height="16"/>
+                            <rect x="2" y="16" width="4" height="4" />
+                            <rect x="8" y="12" width="4" height="8" />
+                            <rect x="14" y="8" width="4" height="12" />
+                            <rect x="20" y="4" width="4" height="16" />
                         </svg>
                     </span>
                     <!-- WiFi SVG -->
                     <span class="wireless">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                            <path d="M12 6c3.537 0 6.837 1.353 9.293 3.809l1.414-1.414C19.874 5.561 16.071 4 12 4c-4.071 0-7.874 1.561-10.707 4.395l1.414 1.414C5.163 7.353 8.463 6 12 6z"/>
-                            <path d="M12 10c2.374 0 4.558.843 6.244 2.244l1.414-1.414C17.539 8.712 14.856 8 12 8c-2.856 0-5.539.712-7.658 1.83l1.414 1.414C7.442 10.843 9.626 10 12 10z"/>
-                            <path d="M12 14c1.13 0 2.162.411 2.957 1.088l1.414-1.414C15.118 12.589 13.604 12 12 12s-3.118.589-4.371 1.674l1.414 1.414C9.838 14.411 10.87 14 12 14z"/>
-                            <circle cx="12" cy="18" r="2"/>
+                            <path
+                                d="M12 6c3.537 0 6.837 1.353 9.293 3.809l1.414-1.414C19.874 5.561 16.071 4 12 4c-4.071 0-7.874 1.561-10.707 4.395l1.414 1.414C5.163 7.353 8.463 6 12 6z" />
+                            <path
+                                d="M12 10c2.374 0 4.558.843 6.244 2.244l1.414-1.414C17.539 8.712 14.856 8 12 8c-2.856 0-5.539.712-7.658 1.83l1.414 1.414C7.442 10.843 9.626 10 12 10z" />
+                            <path
+                                d="M12 14c1.13 0 2.162.411 2.957 1.088l1.414-1.414C15.118 12.589 13.604 12 12 12s-3.118.589-4.371 1.674l1.414 1.414C9.838 14.411 10.87 14 12 14z" />
+                            <circle cx="12" cy="18" r="2" />
                         </svg>
                     </span>
                     <!-- Battery SVG -->
-<span class="battery">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-        <rect x="2" y="6" width="18" height="12" rx="2" fill="none" stroke="white" stroke-width="2"/>
-        <!-- Changed width from 14 to 8.4 (60% of 14) for the fill rectangle -->
-        <rect x="4" y="8" width="8.4" height="8" rx="1" fill="white"/>
-        <path d="M22 12h2" stroke="white" stroke-width="2"/>
-    </svg>
-</span>
+                    <span class="battery">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <rect x="2" y="6" width="18" height="12" rx="2" fill="none" stroke="white"
+                                stroke-width="2" />
+                            <!-- Changed width from 14 to 8.4 (60% of 14) for the fill rectangle -->
+                            <rect x="4" y="8" width="8.4" height="8" rx="1" fill="white" />
+                            <path d="M22 12h2" stroke="white" stroke-width="2" />
+                        </svg>
+                    </span>
                 </div>
             </div>
             <div class="mobile-screen">
@@ -196,7 +202,7 @@
                     <button id="copyJsonButton">Copy JSON</button>
                 </div>
             </div>
-        
+
             <!-- PWA Installation Instructions Dropdown -->
             <div class="pwa-instructions">
                 <div class="dropdown-header" onclick="toggleInstructions()">
@@ -208,7 +214,7 @@
                         <li>Add these meta tags to your HTML <code>&lt;head&gt;</code>:</li>
                         <pre class="code-snippet">
 &lt;link rel="manifest" href="/manifest.json"&gt;</pre>
-                        
+
                         <li>Place the manifest.json file in your root directory</li>
                         <li>Place the icon in your root directory</li>
                         <li>Ensure your site is served over HTTPS</li>
@@ -217,41 +223,39 @@
                 </div>
             </div>
             <a href="/pagebuilder/installpage.html" target="_blank">
-                <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Make Install Page</button>
-              </a>
-              <a href="/demo/installation-page.html" target="_blank">
-                <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Demo</button>
-              </a>
-              
-              <a href="/pagebuilder/offlinepage.html" target="_blank">
-                <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Make Offline Page</button>
-              </a>
-              <a href="/demo/offline.html" target="_blank">
-                <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Demo</button>
-              </a>
-<p>(turn off network to check offline page demo)</p>
+                <button
+                    style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Make
+                    Install Page</button>
+            </a>
+
+            <a href="/pagebuilder/offlinepage.html" target="_blank">
+                <button
+                    style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Make
+                    Offline Page</button>
+            </a>
         </div>
     </div>
     <footer style="text-align: center; padding: 10px; ">
-        <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #fff;">Github</a>.</p>
+        <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator"
+                style="color: #fff;">Github</a>.</p>
     </footer>
-    
-    
+
+
     <script>
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker
-            .register('sw.js')  
-            .then((registration) => {
-              console.log('Service Worker registered:', registration);
-            })
-            .catch((error) => {
-              console.log('Service Worker registration failed:', error);
-            });
+            navigator.serviceWorker
+                .register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
         }
-      </script>
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="pwa-assets/app.js"></script>
-    <script data-goatcounter="https://4bq4yd37xm.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://4bq4yd37xm.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
+
 </html>

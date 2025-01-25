@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="stylesheet" href="assets/installpage.css">
 </head>
+
 <body>
     <div class="builder-container">
         <div class="sidebar">
@@ -24,7 +26,8 @@
 
             <div class="form-group">
                 <label for="paragraphText">Paragraph Text</label>
-                <input type="text" id="paragraphText" placeholder="Get the best experience by installing our app on your device!">
+                <input type="text" id="paragraphText"
+                    placeholder="Get the best experience by installing our app on your device!">
             </div>
 
             <div class="form-group">
@@ -47,6 +50,9 @@
             <button id="downloadButton" class="btn">Download HTML</button>
             <button id="copyButton" class="btn">Copy Code</button>
             <button onclick="showInstructions()" class="btn btn-info">View Instructions</button>
+            <a href="/demo/installation-page.html" target="_blank">
+                <button class="btn">Demo</button>
+            </a>
         </div>
 
         <div class="preview-area">
@@ -55,7 +61,8 @@
                 <iframe class="preview-frame" src="about:blank"></iframe>
             </div>
             <footer style="text-align: center; padding: 10px; ">
-                <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator" style="color: #000000;">Github</a>.</p>
+                <p>Made with ❤️ by Sayfullah. <a href="https://github.com/ssayeb7/PWA-Manifest-Generator"
+                        style="color: #000000;">Github</a>.</p>
             </footer>
         </div>
     </div>
@@ -76,51 +83,51 @@
                     <strong>Web Manifest File:</strong>
                     <p>Create a manifest.json file with the following structure:</p>
                     <div class="code-block">
-{
-    "name": "Your App Name",
-    "short_name": "App",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#4F46E5",
-    "icons": [
-        {
-            "src": "icon.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icon.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
-}</div>
+                        {
+                        "name": "Your App Name",
+                        "short_name": "App",
+                        "start_url": "/",
+                        "display": "standalone",
+                        "background_color": "#ffffff",
+                        "theme_color": "#4F46E5",
+                        "icons": [
+                        {
+                        "src": "icon.png",
+                        "sizes": "192x192",
+                        "type": "image/png"
+                        },
+                        {
+                        "src": "icon.png",
+                        "sizes": "512x512",
+                        "type": "image/png"
+                        }
+                        ]
+                        }</div>
                 </li>
                 <li>
                     <strong>Service Worker:</strong>
                     <p>Create a sw.js file with basic caching:</p>
                     <div class="code-block">
-// sw.js example
-self.addEventListener('install', (event) => {
-    console.log('Service Worker installed');
-});
+                        // sw.js example
+                        self.addEventListener('install', (event) => {
+                        console.log('Service Worker installed');
+                        });
 
-self.addEventListener('activate', (event) => {
-    console.log('Service Worker activated');
-});
+                        self.addEventListener('activate', (event) => {
+                        console.log('Service Worker activated');
+                        });
 
-self.addEventListener('fetch', (event) => {
-    event.respondWith(fetch(event.request));
-});</div>
+                        self.addEventListener('fetch', (event) => {
+                        event.respondWith(fetch(event.request));
+                        });</div>
                 </li>
                 <li>
                     <strong>Required Meta Tags:</strong>
                     <p>Add these to your HTML head:</p>
                     <div class="code-block">
-&lt;link rel="manifest" href="manifest.json"&gt;
-&lt;meta name="theme-color" content="#your-color"&gt;
-&lt;link rel="apple-touch-icon" href="icon.png"&gt;</div>
+                        &lt;link rel="manifest" href="manifest.json"&gt;
+                        &lt;meta name="theme-color" content="#your-color"&gt;
+                        &lt;link rel="apple-touch-icon" href="icon.png"&gt;</div>
                 </li>
             </ul>
         </div>
@@ -131,26 +138,26 @@ self.addEventListener('fetch', (event) => {
             .then(response => response.text())
             .then(data => {
                 document.getElementById('qrcode-container').innerHTML = data;
-                const qrText = document.getElementById('qr-text'), 
-                      qrCodeDiv = document.getElementById('qr-code'),
-                      qrPopup = document.getElementById('qr-popup'),
-                      downloadBtn = document.getElementById('download-btn');
-                
+                const qrText = document.getElementById('qr-text'),
+                    qrCodeDiv = document.getElementById('qr-code'),
+                    qrPopup = document.getElementById('qr-popup'),
+                    downloadBtn = document.getElementById('download-btn');
+
                 qrCodeDiv.style.backgroundColor = 'transparent';
                 qrCodeDiv.style.transition = 'background-color 0.3s ease';
-                
+
                 document.getElementById('qr-button').onclick = () => qrPopup.classList.add('active');
                 document.getElementById('close-popup').onclick = () => qrPopup.classList.remove('active');
-                
+
                 qrText.oninput = () => {
                     qrCodeDiv.innerHTML = '';
                     qrCodeDiv.style.backgroundColor = 'transparent';
-                    
+
                     if (qrText.value.trim()) {
-                        new QRCode(qrCodeDiv, { 
-                            text: qrText.value, 
-                            width: 200, 
-                            height: 200 
+                        new QRCode(qrCodeDiv, {
+                            text: qrText.value,
+                            width: 200,
+                            height: 200
                         });
                         qrCodeDiv.style.backgroundColor = 'white';
                         downloadBtn.disabled = false;
@@ -158,7 +165,7 @@ self.addEventListener('fetch', (event) => {
                         downloadBtn.disabled = true;
                     }
                 };
-    
+
                 // Add download button functionality
                 downloadBtn.addEventListener('click', () => {
                     const qrCanvas = qrCodeDiv.querySelector('canvas');
@@ -171,13 +178,14 @@ self.addEventListener('fetch', (event) => {
                         document.body.removeChild(link);
                     }
                 });
-    
-                document.head.appendChild(Object.assign(document.createElement('script'), { 
-                    src: "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" 
+
+                document.head.appendChild(Object.assign(document.createElement('script'), {
+                    src: "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
                 }));
             })
             .catch(console.error);
     </script>
     <script src="assets/installpage.js"></script>
 </body>
+
 </html>
