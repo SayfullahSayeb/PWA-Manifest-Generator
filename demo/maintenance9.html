@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance - Holographic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #070b1a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, 
+                    rgba(66, 211, 255, 0.1) 0%,
+                    transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        .holo-card {
+            background: rgba(13, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(66, 211, 255, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+
+        .holo-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            pointer-events: none;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(66, 211, 255, 0.2),
+                transparent
+            );
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .user-session {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9em;
+            color: rgba(66, 211, 255, 0.8);
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #42d3ff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(66, 211, 255, 0.5);
+        }
+
+        .status-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .holo-status {
+            background: rgba(66, 211, 255, 0.05);
+            border: 1px solid rgba(66, 211, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .holo-status:hover {
+            background: rgba(66, 211, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .status-label {
+            color: rgba(66, 211, 255, 0.8);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .status-value {
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .message-box {
+            background: rgba(66, 211, 255, 0.05);
+            border: 1px solid rgba(66, 211, 255, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .holo-button {
+            padding: 12px 30px;
+            border: 1px solid rgba(66, 211, 255, 0.3);
+            background: rgba(66, 211, 255, 0.1);
+            color: #42d3ff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(66, 211, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .holo-button:hover::before {
+            left: 100%;
+        }
+
+        .holo-button:hover {
+            background: rgba(66, 211, 255, 0.2);
+            box-shadow: 0 0 20px rgba(66, 211, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="holo-bg"></div>
+    <div class="container">
+        <div class="holo-card">
+            <div class="holo-line"></div>
+            
+            <div class="user-session">
+                <div>User: admin</div>
+                <div>2025-01-25 13:21:57 UTC</div>
+            </div>
+
+            <div class="main-title">
+                <h1>System Maintenance</h1>
+                <div style="color: rgba(66, 211, 255, 0.8);">Scheduled System Upgrade In Progress</div>
+            </div>
+
+            <div class="status-section">
+                <div class="holo-status">
+                    <div class="status-label">System Status</div>
+                    <div class="status-value">Maintenance Active</div>
+                </div>
+                <div class="holo-status">
+                    <div class="status-label">Estimated Duration</div>
+                    <div class="status-value">120 Minutes</div>
+                </div>
+                <div class="holo-status">
+                    <div class="status-label">Priority Level</div>
+                    <div class="status-value">Critical</div>
+                </div>
+            </div>
+
+            <div class="message-box">
+                <p>We are currently implementing critical system upgrades to enhance performance and security. During this maintenance window, all services will be temporarily unavailable.</p>
+                <p style="margin-top: 15px;">Our engineering team is working diligently to complete these improvements as quickly as possible.</p>
+            </div>
+
+            <div class="status-section">
+                <div class="holo-status">
+                    <div class="status-label">Maintenance Type</div>
+                    <div class="status-value">System Upgrade</div>
+                </div>
+                <div class="holo-status">
+                    <div class="status-label">Service Impact</div>
+                    <div class="status-value">Full System</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="mailto:support@example.com" class="holo-button">Contact Support</a>
+                <a href="https://status.example.com" class="holo-button">System Status</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

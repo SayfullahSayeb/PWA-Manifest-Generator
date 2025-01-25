@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance - Cyberpunk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #0B0B1E;
+            color: #00ff88;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .glitch-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 136, 0.05) 0px,
+                rgba(0, 255, 136, 0.05) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(11, 11, 30, 0.9);
+            border: 2px solid #00ff88;
+            border-radius: 5px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .user-terminal {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #00ff88;
+            text-align: right;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .status-box {
+            border: 1px solid #00ff88;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .status-box::before {
+            content: "SYSTEM_STATUS";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #0B0B1E;
+            padding: 0 10px;
+            font-size: 0.8em;
+            color: #00ff88;
+        }
+
+        .status-item {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-label {
+            color: rgba(0, 255, 136, 0.7);
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .contact-button:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-lines"></div>
+    <div class="container">
+        <div class="user-terminal">
+            > USER: admin<br>
+            > TIME: 2025-01-25 13:19:23 UTC
+        </div>
+
+        <div class="header">
+            <h1>System Maintenance</h1>
+        </div>
+
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">SYSTEM STATUS:</span>
+                <span class="blink">MAINTENANCE_MODE</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">MAINTENANCE TYPE:</span>
+                <span>SCHEDULED_UPGRADE</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">ESTIMATED DOWNTIME:</span>
+                <span>120_MINUTES</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">PRIORITY_LEVEL:</span>
+                <span>HIGH</span>
+            </div>
+        </div>
+
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">MESSAGE:</span>
+            </div>
+            <p style="margin-top: 10px; line-height: 1.6;">
+                Critical system upgrades in progress. All services will be temporarily unavailable.
+                Our engineering team is implementing essential improvements to enhance system performance.
+            </p>
+        </div>
+
+        <div class="contact-info">
+            <a href="mailto:support@example.com" class="contact-button">CONTACT_SUPPORT</a>
+            <a href="https://status.example.com" class="contact-button">STATUS_PAGE</a>
+        </div>
+    </div>
+</body>
+</html>

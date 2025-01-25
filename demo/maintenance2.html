@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Maintenance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .maintenance-box {
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .icon {
+            font-size: 72px;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: #00ff88;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-box">
+        <div class="icon">⚡</div>
+        <h1>We're Upgrading!</h1>
+        <div class="message">
+            <p>Our site is currently undergoing scheduled maintenance to bring you an even better experience.</p>
+            <p>We'll be back online very soon.</p>
+        </div>
+        <div class="social-links">
+            <a href="https://twitter.com/example">Twitter</a>
+            <a href="https://discord.gg/example">Discord</a>
+            <a href="mailto:support@example.com">Email Us</a>
+        </div>
+    </div>
+</body>
+</html>
