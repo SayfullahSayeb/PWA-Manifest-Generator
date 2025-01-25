@@ -34,7 +34,7 @@ body {
     overflow-y: auto;
     height: 100vh;
     position: fixed;
-    width: 300px;
+    width: 350px;
 }
 
 .form-group {
@@ -94,7 +94,6 @@ input::placeholder {
     position: sticky;
     bottom: 1.5rem;
     background: white;
-    padding-top: 1rem;
 }
 
 .btn {
@@ -135,7 +134,7 @@ input::placeholder {
     margin-left: 300px;
     min-height: 100vh;
     background: var(--background-color);
-    width: calc(100% - 300px);
+    width: calc(100% - 350px);
     position: fixed;
     right: 0;
     overflow-y: auto;
