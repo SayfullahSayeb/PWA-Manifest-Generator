@@ -15,12 +15,6 @@ PWA Manifest Generator helps developers create valid `manifest.json` files throu
 - 💾 Download complete manifest with assets
 - 📱 Mobile-responsive design
 
-## Tech Stack
-
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- JSZip (for asset packaging)
 
 ## Usage
 
