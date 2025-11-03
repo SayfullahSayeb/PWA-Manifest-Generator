@@ -8,12 +8,12 @@ PWA Manifest Generator helps developers create valid `manifest.json` files throu
 
 ## Features
 
-- 📝 Interactive form-based manifest creation
-- 🎨 Real-time mobile preview with theme visualization
-- 🖼️ Icon and screenshot upload with drag-and-drop support
-- 📋 Live JSON output with copy functionality
-- 💾 Download complete manifest with assets
-- 📱 Mobile-responsive design
+- Interactive form-based manifest creation
+- Real-time mobile preview with theme visualization
+- Icon and screenshot upload with drag-and-drop support
+- Live JSON output with copy functionality
+- Download complete manifest with assets
+- Mobile-responsive design
 
 
 ## Usage
